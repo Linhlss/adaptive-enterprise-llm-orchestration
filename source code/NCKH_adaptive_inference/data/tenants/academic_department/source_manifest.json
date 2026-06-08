@@ -1,0 +1,129 @@
+{
+  "tenant_id": "academic_department",
+  "domain_id": "academic_admin",
+  "domain_name": "Academic and administrative support",
+  "summary": "Department advising, seminar, and course-planning references.",
+  "prose_sources": [
+    {
+      "id": "sfsu_cs_advising",
+      "title": "SFSU CS undergraduate advising",
+      "url": "https://cs.sfsu.edu/undergrads/advising",
+      "content_type": "text/html",
+      "filename": "academic_department_sfsu_cs_advising.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "psu_schedule_planning",
+      "title": "Penn State schedule planning",
+      "url": "https://advising.psu.edu/schedule-planning",
+      "content_type": "text/html",
+      "filename": "academic_department_psu_schedule_planning.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ucdavis_cs_advising",
+      "title": "UC Davis CS advising",
+      "url": "https://cs.ucdavis.edu/advising",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "southalabama_advising_guides",
+      "title": "University of South Alabama advising guides",
+      "url": "https://www.southalabama.edu/departments/academicadvising/advisingguides/index.html",
+      "content_type": "text/html",
+      "filename": "academic_department_southalabama_advising_guides.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "calvin_cs_advising",
+      "title": "Calvin CS advising",
+      "url": "https://calvin.edu/academics/school-stem/computer-science/student-experience/advising",
+      "content_type": "text/html",
+      "filename": "academic_department_calvin_cs_advising.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "uh_chemistry_seminars",
+      "title": "University of Houston chemistry seminar schedule",
+      "url": "https://www.uh.edu/nsm/chemistry/news-events/seminars/",
+      "content_type": "text/html",
+      "filename": "academic_department_uh_chemistry_seminars.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "macalester_advising_handbook",
+      "title": "Macalester advising handbook",
+      "url": "https://www.macalester.edu/academicprograms/wp-content/uploads/sites/77/2022/08/2022-Advising-Handbook-FINAL.pdf",
+      "status": "failed",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "odu_advisor_handbook",
+      "title": "ODU advisor handbook",
+      "url": "https://www.odu.edu/sites/default/files/documents/odu-advisor-handbook.pdf",
+      "content_type": "application/pdf",
+      "filename": "academic_department_odu_advisor_handbook.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ballstate_advising_handbook",
+      "title": "Ball State advising handbook",
+      "url": "https://www.bsu.edu/-/media/www/departmentalcontent/advising/2023-2024-advising-handbook-_-2.pdf?hash=F70CB8E482DD78633036146E62E6FF389FF7FECB&sc_lang=en",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "uah_advising_handbook",
+      "title": "UAH advising handbook",
+      "url": "https://www.uah.edu/images/administrative/faculty-senate/Handbook2007.pdf",
+      "content_type": "application/pdf",
+      "filename": "academic_department_uah_advising_handbook.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "northwestern_econ_advising",
+      "title": "Northwestern economics advising",
+      "url": "https://economics.northwestern.edu/undergraduate/student-services/advising-hours-forms.html",
+      "content_type": "text/html",
+      "filename": "academic_department_northwestern_econ_advising.md",
+      "status": "written"
+    },
+    {
+      "id": "sjsu_undergrad_advising",
+      "title": "SJSU undergraduate advising",
+      "url": "https://www.sjsu.edu/philosophy/current-students/advising/undergrad-advising.php",
+      "content_type": "text/html",
+      "filename": "academic_department_sjsu_undergrad_advising.md",
+      "status": "written"
+    },
+    {
+      "id": "arizona_cs_advising",
+      "title": "University of Arizona CS advising",
+      "url": "https://www.cs.arizona.edu/undergraduate/advising",
+      "content_type": "text/html",
+      "filename": "academic_department_arizona_cs_advising.md",
+      "status": "written"
+    }
+  ],
+  "structured_files": [
+    {
+      "filename": "lab_schedule.csv",
+      "description": "Department lab schedule for room/time tool lookups.",
+      "row_count": 5,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "seminar_list.csv",
+      "description": "Department seminar series snapshot.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "course_assignment.csv",
+      "description": "Department course-assignment matrix for staffing questions.",
+      "row_count": 5,
+      "status": "skipped_existing"
+    }
+  ]
+}

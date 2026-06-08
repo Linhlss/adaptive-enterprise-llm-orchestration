@@ -1,0 +1,6 @@
+term,course_code,course_title,instructor,teaching_assistant,room,mode
+Fall-2026,CSE110,Programming Foundations,Dr. H. Park,N. Bui,ENG-120,In-person
+Fall-2026,CSE205,Data Structures,Dr. G. Torres,I. Vu,ENG-221,Hybrid
+Fall-2026,CSE320,Operating Systems,Dr. J. Hanna,P. Huynh,ENG-310,In-person
+Fall-2026,CSE360,Research Methods,Dr. K. Ahmed,S. Lam,RES-205,Online
+Fall-2026,CSE410,Senior Design,Dr. M. Patel,T. Ngo,ENG-402,In-person

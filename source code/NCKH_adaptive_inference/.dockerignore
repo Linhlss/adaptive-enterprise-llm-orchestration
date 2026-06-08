@@ -1,0 +1,12 @@
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.DS_Store
+system.log
+storage/**/chroma_db/
+storage_tuning/
+memory/
+personalization/adapters/
+NCKH-HUST-2025.2/.git/

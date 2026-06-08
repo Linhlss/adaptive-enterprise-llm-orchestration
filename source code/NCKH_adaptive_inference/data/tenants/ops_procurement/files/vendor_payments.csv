@@ -1,0 +1,5 @@
+vendor_id,vendor_name,invoice_cycle,payment_method,standard_terms,early_pay_discount,risk_flag
+V-100,Northbridge Systems,Monthly,ACH,Net 30,2% / 10,low
+V-220,Summit Lab Supply,Per shipment,Wire,Net 45,none,medium
+V-315,Atlas Consulting Group,Milestone,ACH,Net 60,none,high
+V-412,Campus Print Works,Monthly,Card,Net 15,1% / 7,low

@@ -1,0 +1,5 @@
+incident_id,process_area,severity,detected_by,opened_date,containment_owner,status
+QINC-001,Document control,Medium,Internal audit,2026-08-14,Quality lead,containment_complete
+QINC-002,Supplier onboarding,High,Procurement review,2026-08-20,Vendor manager,root_cause_pending
+QINC-003,Training records,Low,QA analyst,2026-09-02,Compliance coordinator,monitoring
+QINC-004,Audit evidence retention,High,External reviewer,2026-09-11,Records manager,verification_pending

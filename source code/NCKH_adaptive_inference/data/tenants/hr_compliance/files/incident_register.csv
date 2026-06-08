@@ -1,0 +1,5 @@
+case_id,category,severity,reported_by_role,review_sla_hours,escalation_owner,closure_status
+INC-1001,Privacy concern,Medium,Manager,24,Privacy Office,under_review
+INC-1002,Conduct complaint,High,Employee,12,HR Compliance,investigation_open
+INC-1003,Mandatory training lapse,Low,System,48,Learning Team,awaiting_acknowledgement
+INC-1004,Whistleblower intake,High,Hotline,8,Audit and Ethics,restricted_review

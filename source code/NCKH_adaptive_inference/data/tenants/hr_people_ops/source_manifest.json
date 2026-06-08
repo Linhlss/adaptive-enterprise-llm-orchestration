@@ -1,0 +1,107 @@
+{
+  "tenant_id": "hr_people_ops",
+  "domain_id": "hr_policy",
+  "domain_name": "HR and internal policy support",
+  "summary": "Employee handbook, benefits, leave, and onboarding references.",
+  "prose_sources": [
+    {
+      "id": "shu_employee_handbook",
+      "title": "Seton Hall employee handbook",
+      "url": "https://www.shu.edu/human-resources/employee-handbook.html",
+      "content_type": "text/html",
+      "filename": "hr_people_ops_shu_employee_handbook.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ua_hr_handbook",
+      "title": "University of Alabama HR handbook and policy manual",
+      "url": "https://hr.ua.edu/employee-handbook-and-policy-manual/",
+      "content_type": "text/html",
+      "filename": "hr_people_ops_ua_hr_handbook.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "tulane_staff_handbook",
+      "title": "Tulane staff handbook",
+      "url": "https://hr.tulane.edu/staff-handbook",
+      "content_type": "text/html",
+      "filename": "hr_people_ops_tulane_staff_handbook.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ou_leave_pto",
+      "title": "University of Oklahoma leave and PTO",
+      "url": "https://www.ou.edu/hr/benefits/holidays-leave-pto.html",
+      "content_type": "text/html",
+      "filename": "hr_people_ops_ou_leave_pto.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "mtsu_handbook",
+      "title": "MTSU online employee handbook",
+      "url": "https://hrs.mtsu.edu/handbook",
+      "content_type": "text/html",
+      "filename": "hr_people_ops_mtsu_handbook.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ua_staff_handbook_pdf",
+      "title": "University of Alabama staff handbook PDF",
+      "url": "https://hr.ua.edu/wp-content/uploads/Employee-Relations/Managers-Toolkit-Forms/Staff_Handbook.pdf",
+      "content_type": "application/pdf",
+      "filename": "hr_people_ops_ua_staff_handbook_pdf.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "bu_hr_manual_pdf",
+      "title": "Boston University HR policies manual PDF",
+      "url": "https://www.bu.edu/policies/employee-handbook-human-resources-policies-manual/pdf/",
+      "content_type": "application/pdf",
+      "filename": "hr_people_ops_bu_hr_manual_pdf.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "heritage_handbook_pdf",
+      "title": "Heritage University employee handbook PDF",
+      "url": "https://heritage.edu/wp-content/uploads/2022/05/HR_Employment_Handbook_2021.pdf",
+      "content_type": "application/pdf",
+      "filename": "hr_people_ops_heritage_handbook_pdf.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "clayton_handbook_pdf",
+      "title": "Clayton State employee handbook PDF",
+      "url": "https://www.clayton.edu/human-resources/docs/employee-handbook.pdf",
+      "status": "failed",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "bates_handbook",
+      "title": "Bates College employee handbook",
+      "url": "https://www.bates.edu/hr/reference/employee-handbook/",
+      "content_type": "text/html",
+      "filename": "hr_people_ops_bates_handbook.md",
+      "status": "skipped_existing"
+    }
+  ],
+  "structured_files": [
+    {
+      "filename": "leave_balance.csv",
+      "description": "Leave accrual matrix for people-ops questions.",
+      "row_count": 5,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "onboarding_tasks.csv",
+      "description": "Onboarding checklist with offsets and owners.",
+      "row_count": 5,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "benefit_table.csv",
+      "description": "Benefit comparison table for policy and enrollment queries.",
+      "row_count": 5,
+      "status": "skipped_existing"
+    }
+  ]
+}

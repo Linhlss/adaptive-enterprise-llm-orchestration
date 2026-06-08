@@ -1,0 +1,5 @@
+audit_id,process_area,audit_type,planned_week,lead_auditor,evidence_window_days,followup_due_days
+AUD-101,Procure-to-pay,Internal,2026-W39,R. Gibson,10,30
+AUD-102,Training compliance,Internal,2026-W41,L. Ortega,7,21
+AUD-103,Vendor records,Targeted,2026-W43,M. Pham,5,14
+AUD-104,Document control,External prep,2026-W46,S. Walters,12,30

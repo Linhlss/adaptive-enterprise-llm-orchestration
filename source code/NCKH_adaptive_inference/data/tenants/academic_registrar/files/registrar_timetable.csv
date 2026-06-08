@@ -1,0 +1,7 @@
+course_code,course_title,section,day,start_time,end_time,room,instructor,term,status
+REG101,Foundations of Enrollment Services,A1,Mon,08:00,09:30,ADM-201,L. Hsu,Fall-2026,open
+REG204,Academic Record Compliance,B1,Tue,10:00,11:30,ADM-314,C. Rivera,Fall-2026,open
+REG220,Degree Audit Workshop,C2,Wed,13:00,14:30,ADM-112,N. Patel,Fall-2026,waitlist
+REG302,Transcript Operations Lab,L1,Thu,15:00,17:00,REG-LAB,A. Nguyen,Fall-2026,open
+REG330,Policy Exceptions Review,D1,Fri,09:00,10:30,ADM-225,M. Singh,Fall-2026,closed
+REG405,Graduation Clearance Capstone,E1,Fri,13:30,15:00,ADM-410,J. Carter,Fall-2026,open

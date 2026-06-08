@@ -1,0 +1,7 @@
+course_code,course_title,credits,department,level,delivery_mode,prerequisite
+REG101,Foundations of Enrollment Services,3,Registrar Studies,Undergraduate,In-person,None
+REG204,Academic Record Compliance,3,Registrar Studies,Undergraduate,Hybrid,REG101
+REG220,Degree Audit Workshop,2,Academic Operations,Undergraduate,In-person,REG101
+REG302,Transcript Operations Lab,4,Academic Operations,Graduate,In-person,REG204
+REG330,Policy Exceptions Review,3,Policy Administration,Graduate,Online,REG204
+REG405,Graduation Clearance Capstone,3,Policy Administration,Graduate,Hybrid,REG330

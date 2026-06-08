@@ -1,0 +1,68 @@
+x-app-base: &app-base
+  build:
+    context: .
+    dockerfile: Dockerfile
+    args:
+      INSTALL_LORA: "true"
+  env_file:
+    - .env
+  environment:
+    PYTHONPATH: /app
+    LLM_BACKEND: ${LLM_BACKEND:-ollama}
+    DEFAULT_MODEL_CLASS: ${DEFAULT_MODEL_CLASS:-light-latency}
+    DEFAULT_DOMAIN_ID: ${DEFAULT_DOMAIN_ID:-academic_admin}
+    DEFAULT_DOMAIN_NAME: ${DEFAULT_DOMAIN_NAME:-Academic and administrative support}
+    OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+    VLLM_BASE_URL: ${VLLM_BASE_URL:-http://host.docker.internal:8001}
+    RUN_ME_USE_SYSTEM_PYTHON: "true"
+    OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:4b}
+    SHARED_OLLAMA_MODEL: ${SHARED_OLLAMA_MODEL:-qwen3:4b}
+    ENABLE_PERSONALIZATION: ${ENABLE_PERSONALIZATION:-true}
+    FIXED_ROUTE_MODE: ${FIXED_ROUTE_MODE:-adaptive}
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  volumes:
+    - .:/app
+
+services:
+  dev:
+    <<: *app-base
+    command: ["sleep", "infinity"]
+    stdin_open: true
+    tty: true
+
+  api:
+    <<: *app-base
+    command: ["python", "run_me.py", "api", "--setup", "none", "--host", "0.0.0.0"]
+    ports:
+      - "${API_PORT:-8000}:8000"
+
+  ui:
+    <<: *app-base
+    command:
+      [
+        "python",
+        "-m",
+        "streamlit",
+        "run",
+        "streamlit_app.py",
+        "--server.port",
+        "8501",
+        "--server.address",
+        "0.0.0.0",
+        "--server.headless",
+        "true"
+      ]
+    environment:
+      PYTHONPATH: /app
+      STREAMLIT_API_BASE: ${STREAMLIT_API_BASE:-http://api:8000}
+      LLM_BACKEND: ${LLM_BACKEND:-ollama}
+      DEFAULT_MODEL_CLASS: ${DEFAULT_MODEL_CLASS:-light-latency}
+      DEFAULT_DOMAIN_ID: ${DEFAULT_DOMAIN_ID:-academic_admin}
+      DEFAULT_DOMAIN_NAME: ${DEFAULT_DOMAIN_NAME:-Academic and administrative support}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      VLLM_BASE_URL: ${VLLM_BASE_URL:-http://host.docker.internal:8001}
+    ports:
+      - "${STREAMLIT_PORT:-8501}:8501"
+    depends_on:
+      - api

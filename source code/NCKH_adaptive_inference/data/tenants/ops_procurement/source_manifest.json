@@ -1,0 +1,107 @@
+{
+  "tenant_id": "ops_procurement",
+  "domain_id": "ops_compliance",
+  "domain_name": "Operations and compliance support",
+  "summary": "Procurement, vendor, contract, and payment references.",
+  "prose_sources": [
+    {
+      "id": "alasu_procurement_manual",
+      "title": "Alabama State purchasing and bidding manual",
+      "url": "https://www.alasu.edu/administration/business-and-finance/procurement/Purchasing%20and%20Bidding%20Procedural%20Manual%20as%20of%20August.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_procurement_alasu_procurement_manual.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ballstate_po_terms",
+      "title": "Ball State purchase order terms",
+      "url": "https://www.bsu.edu/-/media/www/departmentalcontent/purchasing/pdfs/purchase-order-terms-and-conditions--purchaseordertermsandconditions7102024.pdf?hash=1592BD55DF3B789ACA62E8ACECF301944EBCAC7B&sc_lang=en",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "fdu_purchasing_policies",
+      "title": "FDU purchasing policies",
+      "url": "https://www.fdu.edu/wp-content/uploads/2022/04/purchasing-policies.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_procurement_fdu_purchasing_policies.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "niu_procurement_procedures",
+      "title": "NIU procurement procedures",
+      "url": "https://www.niu.edu/procurement/procedures/procurement-procedures.shtml",
+      "content_type": "text/html",
+      "filename": "ops_procurement_niu_procurement_procedures.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "cornell_invoice_processing",
+      "title": "Cornell invoice processing procedures",
+      "url": "https://finance.cornell.edu/procurement/buyers/manual/invoices",
+      "content_type": "text/html",
+      "filename": "ops_procurement_cornell_invoice_processing.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "northwestern_purchasing_policy",
+      "title": "Northwestern purchasing and payment policy",
+      "url": "https://www.northwestern.edu/procurement/source-purchase/purchasing-policy.html",
+      "content_type": "text/html",
+      "filename": "ops_procurement_northwestern_purchasing_policy.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "csus_vendor_guidelines",
+      "title": "CSU Sacramento vendor guidelines",
+      "url": "https://www.csus.edu/administration-business-affairs/internal/procurement-contracts/_internal/_documents/vendor-guidelines.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_procurement_csus_vendor_guidelines.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "rutgers_procedures_manual",
+      "title": "Rutgers procurement procedures manual",
+      "url": "https://procurementservices.rutgers.edu/resources/procedures-manual",
+      "content_type": "text/html",
+      "filename": "ops_procurement_rutgers_procedures_manual.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "wvu_procedures",
+      "title": "WVU procurement procedures",
+      "url": "https://procurement.wvu.edu/rules/procedures",
+      "content_type": "text/html",
+      "filename": "ops_procurement_wvu_procedures.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "cmu_procurement_manual",
+      "title": "Carnegie Mellon procurement manual",
+      "url": "https://www.cmu.edu/finance/procurementservices/policies-procedures/files/procurement-manual.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_procurement_cmu_procurement_manual.pdf",
+      "status": "skipped_existing"
+    }
+  ],
+  "structured_files": [
+    {
+      "filename": "purchase_orders.csv",
+      "description": "Purchase-order tracker for tool-based operational lookups.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "vendor_payments.csv",
+      "description": "Vendor payment policy matrix.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "supplier_contracts.csv",
+      "description": "Supplier contract summary for term and renewal queries.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    }
+  ]
+}

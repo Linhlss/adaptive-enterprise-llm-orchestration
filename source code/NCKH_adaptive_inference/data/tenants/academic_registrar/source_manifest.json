@@ -1,0 +1,122 @@
+{
+  "tenant_id": "academic_registrar",
+  "domain_id": "academic_admin",
+  "domain_name": "Academic and administrative support",
+  "summary": "Registrar-oriented policies, calendars, registration pages, and catalog-like references.",
+  "prose_sources": [
+    {
+      "id": "asu_academic_calendar",
+      "title": "ASU academic calendar",
+      "url": "https://registrar.asu.edu/academic-calendar",
+      "content_type": "text/html",
+      "filename": "academic_registrar_asu_academic_calendar.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "utk_academic_calendars",
+      "title": "UTK academic calendars",
+      "url": "https://registrar.utk.edu/calendar/academic-calendars/",
+      "content_type": "text/html",
+      "filename": "academic_registrar_utk_academic_calendars.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "unl_academic_calendar",
+      "title": "UNL academic calendar",
+      "url": "https://registrar.unl.edu/calendars/academic-calendar/",
+      "content_type": "text/html",
+      "filename": "academic_registrar_unl_academic_calendar.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ohio_official_calendar",
+      "title": "Ohio University official academic calendar",
+      "url": "https://www.ohio.edu/registrar/academic-calendar/official-academic-calendar",
+      "content_type": "text/html",
+      "filename": "academic_registrar_ohio_official_calendar.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "psu_registrar_calendars",
+      "title": "Penn State registrar calendars",
+      "url": "https://registrar.psu.edu/index.cfm/academic-calendars/registration/academic-calendars/registration/academic-calendars/",
+      "content_type": "text/html",
+      "filename": "academic_registrar_psu_registrar_calendars.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ucm_academic_calendar",
+      "title": "UC Merced academic calendar 2025-2026",
+      "url": "https://registrar.ucmerced.edu/schedules/academic-calendar/academic-calendar-2025-2026",
+      "status": "failed",
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "id": "rockhurst_registrar",
+      "title": "Rockhurst registrar portal",
+      "url": "https://www.rockhurst.edu/academics/registrar",
+      "content_type": "text/html",
+      "filename": "academic_registrar_rockhurst_registrar.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "gvsu_academic_calendar",
+      "title": "GVSU academic calendar",
+      "url": "https://www.gvsu.edu/registrar/academiccalendar.htm",
+      "content_type": "text/html",
+      "filename": "academic_registrar_gvsu_academic_calendar.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ucdavis_calendar",
+      "title": "UC Davis academic calendar",
+      "url": "https://registrar.ucdavis.edu/calendar",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "unt_fall_calendar",
+      "title": "UNT fall academic calendar",
+      "url": "https://registrar.unt.edu/registration/fall-academic-calendar.html",
+      "content_type": "text/html",
+      "filename": "academic_registrar_unt_fall_calendar.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "nsu_registrar_calendars",
+      "title": "Norfolk State registrar calendars",
+      "url": "https://www.nsu.edu/enrollment-management/registrar/calendars",
+      "content_type": "text/html",
+      "filename": "academic_registrar_nsu_registrar_calendars.md",
+      "status": "written"
+    },
+    {
+      "id": "cau_registration_records_pdf",
+      "title": "Clark Atlanta registration and academic records PDF",
+      "url": "https://catalog.cau.edu/undergraduate/registration-academic-records/registration-academic-records.pdf",
+      "content_type": "application/pdf",
+      "filename": "academic_registrar_cau_registration_records_pdf.pdf",
+      "status": "written"
+    }
+  ],
+  "structured_files": [
+    {
+      "filename": "registrar_timetable.csv",
+      "description": "Tool-friendly timetable snapshot for registrar-style schedule lookups.",
+      "row_count": 6,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "course_catalog.csv",
+      "description": "Compact course catalog view for catalog and credits queries.",
+      "row_count": 6,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "registration_schedule.csv",
+      "description": "Registration milestones for tool-route deadline questions.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+training_code,training_name,audience,cadence,owner,acknowledgement_required,escalation_after_days
+TRN-ETHICS,Code of conduct and ethics,All staff,Annual,Compliance Office,yes,14
+TRN-PRIVACY,Privacy and data handling,Staff with record access,Annual,Privacy Office,yes,10
+TRN-RETAL,Retaliation prevention,Managers,Every 2 years,HR Compliance,yes,21
+TRN-REPORT,Incident reporting workflow,All supervisors,Annual,Risk Office,yes,7

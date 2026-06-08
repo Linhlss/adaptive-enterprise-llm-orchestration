@@ -1,0 +1,5 @@
+level_code,trigger_type,first_response,documentation_required,appeal_window_days,retention_months
+DISC-1,Minor policy breach,Coaching conversation,manager notes,5,12
+DISC-2,Repeated minor breach,Written warning,signed warning,7,18
+DISC-3,Serious misconduct,Final warning or suspension review,case file,10,24
+DISC-4,Critical breach,Termination review,HR and legal file,10,36

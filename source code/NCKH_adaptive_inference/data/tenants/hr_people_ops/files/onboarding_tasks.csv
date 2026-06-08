@@ -1,0 +1,6 @@
+task_id,task_name,owner,due_day_offset,required,system,status_rule
+ONB-001,Issue employee ID and HRIS access,People Ops,0,yes,HRIS,Must be completed before orientation closes.
+ONB-002,Benefits election briefing,Benefits Team,3,yes,Benefits Portal,Open for 30 calendar days after hire.
+ONB-003,Manager welcome plan,Hiring Manager,1,yes,Manager Hub,Manager signoff required.
+ONB-004,Policy acknowledgement pack,Compliance,5,yes,Learning Portal,Escalate if incomplete after day 7.
+ONB-005,Equipment pickup,IT Service Desk,2,conditional,Asset Desk,Required for hybrid and remote roles.

@@ -1,0 +1,129 @@
+{
+  "tenant_id": "ops_quality",
+  "domain_id": "ops_compliance",
+  "domain_name": "Operations and compliance support",
+  "summary": "Quality assurance, internal audit, and corrective-action references.",
+  "prose_sources": [
+    {
+      "id": "westminster_qa_handbook",
+      "title": "University of Westminster quality assurance handbook",
+      "url": "https://www.westminster.ac.uk/about-us/our-university/corporate-information/policies-and-documents-a-z/quality-assurance-and-enhancement-handbook",
+      "content_type": "text/html",
+      "filename": "ops_quality_westminster_qa_handbook.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "kcl_qa_handbook",
+      "title": "King's College London quality assurance handbook",
+      "url": "https://www.kcl.ac.uk/policyhub/quality-assurance-handbook",
+      "content_type": "text/html",
+      "filename": "ops_quality_kcl_qa_handbook.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ucdavis_qapp_pdf",
+      "title": "UC Davis quality assurance project plan",
+      "url": "https://aqrc.ucdavis.edu/sites/g/files/dgvnsk1671/files/inline-files/UCD_CSN_QAPP_v1.6.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_quality_ucdavis_qapp_pdf.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "cardiff_internal_audit_manual",
+      "title": "Cardiff University internal audit manual",
+      "url": "https://www.cardiff.ac.uk/documents/2500968-internal-audit-manual",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "illinois_audit_manual_page",
+      "title": "University of Illinois audit manual page",
+      "url": "https://www.audits.uillinois.edu/audit_manual",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "illinois_audit_manual_pdf",
+      "title": "University of Illinois audit manual PDF",
+      "url": "https://www.audits.uillinois.edu/userfiles/Servers/Server_700/file/Audit_Manual.pdf",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "uhsystem_audit_manual",
+      "title": "University of Houston System audit manual",
+      "url": "https://uhsystem.edu/offices/internal-audit/audit-manual/index.php",
+      "content_type": "text/html",
+      "filename": "ops_quality_uhsystem_audit_manual.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "usf_internal_audit_manual_pdf",
+      "title": "University of San Francisco internal audit manual PDF",
+      "url": "https://myusf.usfca.edu/sites/default/files/Internal-Audit-Manual.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_quality_usf_internal_audit_manual_pdf.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "du_corrective_action_staff",
+      "title": "University of Denver corrective action for staff",
+      "url": "https://www.du.edu/handbook/corrective-action-staff",
+      "content_type": "text/html",
+      "filename": "ops_quality_du_corrective_action_staff.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "auburn_corrective_action_report",
+      "title": "Auburn corrective action report form",
+      "url": "https://auburn.edu/administration/human_resources/forms/hr80.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_quality_auburn_corrective_action_report.pdf",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "du_corrective_action_pdf",
+      "title": "University of Denver corrective action policy PDF",
+      "url": "https://www.du.edu/sites/default/files/2023-11/HRIC%203.10.061%20Corrective%20Action%20.pdf",
+      "content_type": "application/pdf",
+      "filename": "ops_quality_du_corrective_action_pdf.pdf",
+      "status": "written"
+    },
+    {
+      "id": "rvu_corrective_actions",
+      "title": "Rocky Vista corrective actions",
+      "url": "https://studenthandbook.rvu.edu/node/3339/corrective-actions",
+      "content_type": "text/html",
+      "filename": "ops_quality_rvu_corrective_actions.md",
+      "status": "written"
+    },
+    {
+      "id": "stjohns_corrective_action",
+      "title": "St. John's corrective action policy",
+      "url": "https://www.stjohns.edu/who-we-are/leadership-and-administration/administrative-offices/office-senior-vice-president-and-chief-operating-officer/human-resources/policy-702-corrective-action",
+      "content_type": "text/html",
+      "filename": "ops_quality_stjohns_corrective_action.md",
+      "status": "written"
+    }
+  ],
+  "structured_files": [
+    {
+      "filename": "incident_log.csv",
+      "description": "Operational incident log for quality/compliance tool queries.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "audit_schedule.csv",
+      "description": "Internal audit schedule with cadence fields.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "corrective_action_tracker.csv",
+      "description": "Corrective-action tracker for CAPA-style operational questions.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    }
+  ]
+}

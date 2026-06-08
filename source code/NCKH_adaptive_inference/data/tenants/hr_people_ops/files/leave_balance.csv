@@ -1,0 +1,6 @@
+employee_band,leave_type,opening_hours,monthly_accrual_hours,carryover_cap_hours,notes
+New hire full-time,Annual leave,0,10.0,120,Accrual begins after first payroll cycle.
+Year 3 full-time,Annual leave,32,13.5,160,Higher accrual band after 24 months of service.
+Part-time 0.60 FTE,Annual leave,18,8.1,96,Prorated by FTE.
+All eligible staff,Sick leave,0,8.0,240,No payout on separation except where law requires.
+Managers,Professional development,16,0,16,Reset each fiscal year.

@@ -1,0 +1,93 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam componentStyle rectangle
+skinparam packageTitleAlignment center
+
+title Unified Runtime Architecture
+
+package "Request Ingress" {
+  rectangle "Client / benchmark request" as U
+  rectangle "API serving layer" as API
+  rectangle "Workflow controller" as CTRL
+  rectangle "Tenant + domain context resolver" as TENANT
+
+  U -right-> API
+  API -right-> CTRL
+  CTRL -right-> TENANT
+}
+
+package "Unified Enterprise Serving Runtime" {
+  rectangle "Serving-policy layer\nroute scoring + model-class decision\nsafety and scope enforcement" as POLICY
+  rectangle "Execution route selector" as EXEC
+
+  package "Execution Paths" {
+    rectangle "Retrieval execution\ntenant-scoped corpus access" as RET
+    rectangle "Tool execution\nfile/table/link inspection" as TOOL
+    rectangle "General execution\nguarded direct generation" as GEN
+    rectangle "Safe refusal" as REF
+  }
+
+  rectangle "Active model backend" as BACKEND
+  rectangle "Model tier registry\nstrong-quality | balanced | light-latency" as MODEL
+  database "Tenant-scoped runtime state\nmemory | logs | storage | retrieval index" as STATE
+  rectangle "Optional lightweight personalization\nsupporting mechanism only" as PERS
+  rectangle "Response assembly + route trace" as TRACE
+  rectangle "Telemetry + benchmark artifact emission" as OBS
+
+  POLICY -down-> EXEC
+  EXEC -down-> RET
+  EXEC -down-> TOOL
+  EXEC -down-> GEN
+  EXEC -down-> REF
+
+  STATE -right-> POLICY
+  STATE -right-> RET
+  STATE -right-> TOOL
+  STATE -right-> GEN
+
+  RET -down-> BACKEND
+  TOOL -down-> BACKEND
+  GEN -down-> BACKEND
+  MODEL -down-> BACKEND
+  PERS ..> BACKEND : adapter available
+
+  BACKEND -right-> TRACE
+  REF -right-> TRACE
+  TRACE -down-> OBS
+
+  RET -[hidden]right- TOOL
+  TOOL -[hidden]right- GEN
+  GEN -[hidden]right- REF
+  POLICY -[hidden]left- STATE
+  BACKEND -[hidden]right- PERS
+}
+
+package "Systems Evaluation Layer" {
+  rectangle "Q2 benchmark packs\nmain | model | stability | isolation" as PACK
+  rectangle "Controlled replay\npolicy pass -> per-tier replay -> merged artifact" as REPLAY
+  rectangle "Tables and benchmark summaries" as TABLES
+
+  PACK -down-> TABLES
+  REPLAY -down-> TABLES
+  PACK -[hidden]right- REPLAY
+}
+
+package "Backend Policy" {
+  rectangle "Ollama\nlocal smoke and development" as DEV
+  rectangle "vLLM\nofficial paper-facing benchmark backend" as VLLM
+
+  DEV -[hidden]down- VLLM
+}
+
+TENANT -right-> POLICY
+OBS -right-> PACK
+OBS -right-> REPLAY
+DEV -up-> BACKEND
+VLLM -up-> BACKEND
+TABLES -[hidden]left- OBS
+
+@enduml

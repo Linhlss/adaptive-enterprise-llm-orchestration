@@ -1,0 +1,5 @@
+ca_id,source,root_cause,owner,due_date,verification_method,status
+CA-9001,AUD-101,Approval matrix outdated,Process owner,2026-10-20,Sampling of five approved transactions,open
+CA-9002,QINC-002,Missing supplier insurance check,Vendor manager,2026-10-05,Checklist and contract file review,in_progress
+CA-9003,AUD-102,Escalation reminders not configured,Learning systems admin,2026-10-01,System reminder test and completion log,verification_pending
+CA-9004,QINC-004,Retention folder permissions inconsistent,Records manager,2026-10-28,Access review and signoff,open

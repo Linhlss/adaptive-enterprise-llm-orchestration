@@ -1,0 +1,5 @@
+contract_id,supplier_name,service_area,renewal_notice_days,insurance_required,data_processing_required,owner
+CT-701,Northbridge Systems,Endpoint devices,60,yes,no,IT Procurement
+CT-702,Atlas Consulting Group,Program assessment,90,yes,yes,Strategic Sourcing
+CT-703,Summit Lab Supply,Laboratory consumables,45,yes,no,Research Ops
+CT-704,Campus Print Works,Print and mail,30,no,no,Business Services

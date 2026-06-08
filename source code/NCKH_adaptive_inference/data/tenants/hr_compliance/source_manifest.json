@@ -1,0 +1,107 @@
+{
+  "tenant_id": "hr_compliance",
+  "domain_id": "hr_policy",
+  "domain_name": "HR and internal policy support",
+  "summary": "Conduct, training, disciplinary, and incident-reporting references.",
+  "prose_sources": [
+    {
+      "id": "rochester_code_of_conduct",
+      "title": "University of Rochester code of conduct",
+      "url": "https://www.rochester.edu/policies/policy/code-of-conduct/",
+      "content_type": "text/html",
+      "filename": "hr_compliance_rochester_code_of_conduct.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "uc_incident_reporting",
+      "title": "University of Cincinnati incident reporting",
+      "url": "https://www.uc.edu/campus-life/conduct/incident-reporting.html",
+      "content_type": "text/html",
+      "filename": "hr_compliance_uc_incident_reporting.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "kean_conduct_forms",
+      "title": "Kean University reports and conduct forms",
+      "url": "https://www.kean.edu/offices/community-standards-and-student-conduct/reports-conduct-forms",
+      "content_type": "text/html",
+      "filename": "hr_compliance_kean_conduct_forms.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "greenwich_disciplinary_policy",
+      "title": "University of Greenwich disciplinary policy",
+      "url": "https://www.gre.ac.uk/docs/rep/people/disciplinary-procedure",
+      "content_type": "text/html",
+      "filename": "hr_compliance_greenwich_disciplinary_policy.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "uc_employee_conduct",
+      "title": "University of Cincinnati employee conduct and discipline",
+      "url": "https://www.uc.edu/about/publicsafety/about/department-policies/employee-conduct-and-discipline.html",
+      "content_type": "text/html",
+      "filename": "hr_compliance_uc_employee_conduct.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "rochester_corrective_discipline",
+      "title": "University of Rochester corrective discipline",
+      "url": "https://www.rochester.edu/policies/policies/corrective-discipline/",
+      "content_type": "text/html",
+      "filename": "hr_compliance_rochester_corrective_discipline.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "rit_mandatory_training",
+      "title": "RIT mandatory training policy",
+      "url": "https://www.rit.edu/policies/c250",
+      "content_type": "text/html",
+      "filename": "hr_compliance_rit_mandatory_training.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "cmu_reporting",
+      "title": "Carnegie Mellon reporting policy",
+      "url": "https://www.cmu.edu/policies/administrative-and-governance/sexual-misconduct/reporting.html",
+      "content_type": "text/html",
+      "filename": "hr_compliance_cmu_reporting.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "cornell_whistleblower",
+      "title": "Cornell whistleblower protection",
+      "url": "https://policy.cornell.edu/policy-library/whistleblower-protection",
+      "content_type": "text/html",
+      "filename": "hr_compliance_cornell_whistleblower.md",
+      "status": "skipped_existing"
+    },
+    {
+      "id": "ucl_mandatory_training",
+      "title": "UCL mandatory training policy",
+      "url": "https://www.ucl.ac.uk/human-resources/policies/2024/jun/mandatory-training-policy",
+      "status": "failed",
+      "error": "HTTP Error 403: Forbidden"
+    }
+  ],
+  "structured_files": [
+    {
+      "filename": "training_acknowledgement_log.csv",
+      "description": "Training cadence and acknowledgement requirements.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "incident_register.csv",
+      "description": "Incident handling register with SLA-oriented fields.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    },
+    {
+      "filename": "disciplinary_register.csv",
+      "description": "Disciplinary ladder reference table.",
+      "row_count": 4,
+      "status": "skipped_existing"
+    }
+  ]
+}

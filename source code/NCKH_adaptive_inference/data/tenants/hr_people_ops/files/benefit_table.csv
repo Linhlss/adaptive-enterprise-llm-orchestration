@@ -1,0 +1,6 @@
+benefit_code,benefit_name,eligibility,employee_cost_share,employer_cost_share,enrollment_window
+BEN-MED-A,Core medical plan,0.75 FTE and above,18%,82%,30 days from hire
+BEN-DEN,Dental plan,0.50 FTE and above,25%,75%,30 days from hire
+BEN-VIS,Vision plan,0.50 FTE and above,40%,60%,30 days from hire
+BEN-RET,Retirement match,After 6 months service,5% recommended,Up to 4% match,Monthly payroll cutoff
+BEN-EDU,Tuition assistance,After probationary period,0%,100% up to annual cap,Before term billing deadline

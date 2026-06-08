@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+__MACOSX/
+~$*.xlsx
+
+# Logs
+*.log
+system.log
+logs/
+
+# Local runtime artifacts
+memory/
+storage/
+source code/
+storage/**/chroma_db/
+*.sqlite3
+*.db
+personalization/adapters/*
+!personalization/adapters/.gitkeep
+
+# Notebook / checkpoints
+.ipynb_checkpoints/
+checkpoints/
+outputs/
+
+# IDE
+.vscode/
+.idea/

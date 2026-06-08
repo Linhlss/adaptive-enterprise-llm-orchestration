@@ -1,0 +1,5 @@
+po_id,category,requester_role,approval_level,vendor_tier,payment_term_days,status
+PO-24001,IT hardware,Department manager,Director,Preferred,30,approved
+PO-24002,Lab equipment,Faculty lead,Dean,Strategic,45,under_review
+PO-24003,Office supplies,Operations coordinator,Manager,Preferred,30,closed
+PO-24004,Consulting services,Program director,Procurement committee,New,60,contract_pending

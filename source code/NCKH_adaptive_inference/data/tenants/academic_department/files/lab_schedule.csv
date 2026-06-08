@@ -1,0 +1,6 @@
+lab_code,topic,weekday,start_time,end_time,room,supervisor,status
+LAB-DS101,Data systems lab,Mon,09:00,11:00,ENG-LAB-1,Dr. T. Le,active
+LAB-ML220,Applied machine learning lab,Tue,13:00,15:00,ENG-LAB-3,Dr. P. Morgan,active
+LAB-NET310,Network systems practicum,Wed,08:30,10:30,ENG-LAB-2,K. Ramos,active
+LAB-RSRCH,Research methods clinic,Thu,14:00,16:00,RES-108,Dr. A. Tran,pilot
+LAB-HCI330,Human-computer interaction studio,Fri,10:00,12:00,DESIGN-12,R. Chen,active
