@@ -58,11 +58,11 @@ Supporting personalization code remains in the repo as a secondary layer, not th
 
 Start here:
 
-1. [docs/README.md](/Users/thao/Documents/paper%20NCKH%20/source%20code/NCKH_adaptive_inference/docs/README.md)
-2. [docs/01_source_of_truth/RESEARCH_FOCUS.md](/Users/thao/Documents/paper%20NCKH%20/source%20code/NCKH_adaptive_inference/docs/01_source_of_truth/RESEARCH_FOCUS.md)
-3. [docs/02_active_guides/EXTERNAL_REPO_STATUS.md](/Users/thao/Documents/paper%20NCKH%20/source%20code/NCKH_adaptive_inference/docs/02_active_guides/EXTERNAL_REPO_STATUS.md)
-4. [docs/02_active_guides/SETUP_AND_DEV_GUIDE.md](/Users/thao/Documents/paper%20NCKH%20/source%20code/NCKH_adaptive_inference/docs/02_active_guides/SETUP_AND_DEV_GUIDE.md)
-5. [docs/02_active_guides/BENCHMARK_LIMITATIONS.md](/Users/thao/Documents/paper%20NCKH%20/source%20code/NCKH_adaptive_inference/docs/02_active_guides/BENCHMARK_LIMITATIONS.md)
+1. [docs/README.md](source%20code/NCKH_adaptive_inference/docs/README.md)
+2. [docs/01_source_of_truth/RESEARCH_FOCUS.md](source%20code/NCKH_adaptive_inference/docs/01_source_of_truth/RESEARCH_FOCUS.md)
+3. [docs/02_active_guides/EXTERNAL_REPO_STATUS.md](source%20code/NCKH_adaptive_inference/docs/02_active_guides/EXTERNAL_REPO_STATUS.md)
+4. [docs/02_active_guides/SETUP_AND_DEV_GUIDE.md](source%20code/NCKH_adaptive_inference/docs/02_active_guides/SETUP_AND_DEV_GUIDE.md)
+5. [docs/02_active_guides/BENCHMARK_LIMITATIONS.md](source%20code/NCKH_adaptive_inference/docs/02_active_guides/BENCHMARK_LIMITATIONS.md)
 
 ## Quick Start
 
