@@ -1,4 +1,4 @@
-# Framework Diagrams
+# System Diagrams
 
 This file replaces the older framework figures that still reflected the earlier
 `adaptive multi-path` framing. The diagrams below are aligned with the current

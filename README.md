@@ -1,6 +1,6 @@
 # Adaptive Orchestration for Multi-Domain, Multi-Tenant Enterprise LLM Serving
 
-This repository is the implementation workspace for a systems-and-application study on adaptive enterprise LLM orchestration.
+This repository is a curated research artifact for a systems-and-application study on adaptive enterprise LLM orchestration.
 
 The current paper-facing scope is:
 
@@ -50,7 +50,7 @@ This is best read as a runnable prototype with a validated benchmark constructio
 - `systems_evaluation/`: benchmark preparation, validation, execution, replay, reporting
 - `data/tenants/`: tenant-scoped corpora for the benchmark packs
 - `config/tenants.json`: tenant/domain metadata
-- `docs/`: research framing, setup, validation, limitations, public-facing status
+- `docs/`: research framing, setup, validation, limitations, figures, and public-facing status
 
 Supporting personalization code remains in the repo as a secondary layer, not the core contribution.
 
@@ -58,11 +58,13 @@ Supporting personalization code remains in the repo as a secondary layer, not th
 
 Start here:
 
-1. [docs/README.md](source%20code/NCKH_adaptive_inference/docs/README.md)
-2. [docs/01_source_of_truth/RESEARCH_FOCUS.md](source%20code/NCKH_adaptive_inference/docs/01_source_of_truth/RESEARCH_FOCUS.md)
-3. [docs/02_active_guides/EXTERNAL_REPO_STATUS.md](source%20code/NCKH_adaptive_inference/docs/02_active_guides/EXTERNAL_REPO_STATUS.md)
-4. [docs/02_active_guides/SETUP_AND_DEV_GUIDE.md](source%20code/NCKH_adaptive_inference/docs/02_active_guides/SETUP_AND_DEV_GUIDE.md)
-5. [docs/02_active_guides/BENCHMARK_LIMITATIONS.md](source%20code/NCKH_adaptive_inference/docs/02_active_guides/BENCHMARK_LIMITATIONS.md)
+1. [docs/README.md](docs/README.md)
+2. [docs/01_source_of_truth/RESEARCH_FOCUS.md](docs/01_source_of_truth/RESEARCH_FOCUS.md)
+3. [docs/02_active_guides/EXTERNAL_REPO_STATUS.md](docs/02_active_guides/EXTERNAL_REPO_STATUS.md)
+4. [docs/02_active_guides/SETUP_AND_DEV_GUIDE.md](docs/02_active_guides/SETUP_AND_DEV_GUIDE.md)
+5. [docs/02_active_guides/BENCHMARK_LIMITATIONS.md](docs/02_active_guides/BENCHMARK_LIMITATIONS.md)
+
+Design figures exported for proposal and paper use are stored under `docs/figures/`.
 
 ## Quick Start
 
