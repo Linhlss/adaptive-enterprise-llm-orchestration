@@ -11,7 +11,7 @@ This repository is a curated research artifact for a systems-and-application stu
 The project studies how a shared enterprise LLM runtime can route requests across retrieval, tool use, direct generation, and explicit safe refusal under multi-domain and multi-tenant constraints. Its focus is not only whether the final answer is correct, but whether the runtime decision process can be made observable, auditable, and evaluable through route-level evidence.
 
 <p align="center">
-  <img src="docs/figures/unified-runtime-architecture.png" width="780" alt="Unified runtime architecture">
+  <img src="docs/figures/readme-hero-architecture.png" width="1000" alt="Unified runtime architecture">
 </p>
 
 ## At a Glance

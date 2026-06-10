@@ -18,7 +18,7 @@ Read these first:
 ## Public-Facing Guides
 
 - [02_active_guides/EXTERNAL_REPO_STATUS.md](02_active_guides/EXTERNAL_REPO_STATUS.md)
-- [02_active_guides/SYSTEM_DIAGRAMS.md](02_active_guides/SYSTEM_DIAGRAMS.md)
+- [figures/README.md](figures/README.md)
 - [02_active_guides/SETUP_AND_DEV_GUIDE.md](02_active_guides/SETUP_AND_DEV_GUIDE.md)
 - [02_active_guides/MULTI_DOMAIN_CORPUS_BUILD.md](02_active_guides/MULTI_DOMAIN_CORPUS_BUILD.md)
 - [02_active_guides/BENCHMARK_CONTENT_VALIDATION.md](02_active_guides/BENCHMARK_CONTENT_VALIDATION.md)
