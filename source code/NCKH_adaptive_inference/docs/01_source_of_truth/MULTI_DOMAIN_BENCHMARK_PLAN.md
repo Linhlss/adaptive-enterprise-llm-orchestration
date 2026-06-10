@@ -1,6 +1,6 @@
-# Q2 Multi-Domain Plan
+# Multi-Domain Benchmark Plan
 
-This document records the active plan for the Q2 paper direction.
+This document records the active plan for the current paper direction.
 
 ## 1. One-Line Thesis
 
@@ -10,7 +10,7 @@ Build an adaptive enterprise LLM orchestration framework that can serve multiple
 
 High-level aim:
 
-- build a Q2-oriented systems prototype
+- build a benchmarkable systems prototype
 - avoid framing the project as a pure algorithm paper
 - avoid framing the project as a full production gateway platform
 
@@ -133,11 +133,11 @@ Already completed in code/config:
 3. more domain-portable router features
 4. broader prompt wording beyond one academic-only scope
 5. tenant and trace metadata with `domain_id` / `domain_name`
-6. Q2 prepare/validate benchmark scripts
-7. Q2 model-sensitivity pipeline
-8. Q2 stability pipeline
-9. Q2 domain-aware isolation pipeline
-10. `q2_domain_pack=true` tenant scaffolding
+6. benchmark prepare/validate scripts
+7. model-sensitivity pipeline
+8. stability pipeline
+9. domain-aware isolation pipeline
+10. multi-domain tenant initialization
 11. controlled replay pipeline for joint adaptive `path + model-tier`
 
 Still required at the benchmark/evidence level:

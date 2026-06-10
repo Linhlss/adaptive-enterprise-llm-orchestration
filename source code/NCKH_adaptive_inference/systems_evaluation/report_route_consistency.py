@@ -99,7 +99,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Build consistency report between dataset expected_route and runtime trace.route."
     )
-    parser.add_argument("--dataset", default="systems_evaluation/test_queries_q2_multidomain.json")
+    parser.add_argument("--dataset", default="systems_evaluation/test_queries_multidomain.json")
     parser.add_argument("--report-dir", default="systems_evaluation/generated_reports")
     parser.add_argument("--glob", default="*_predictions.json")
     parser.add_argument("--output-prefix", default="route_consistency")

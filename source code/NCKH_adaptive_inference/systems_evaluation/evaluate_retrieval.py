@@ -28,7 +28,7 @@ from enterprise_runtime.retrieval import (
 from enterprise_runtime.router import route_question
 from enterprise_runtime.runtime_manager import get_runtime
 
-DATASET_PATH = BASE_DIR / "systems_evaluation" / "test_queries_q2_multidomain.json"
+DATASET_PATH = BASE_DIR / "systems_evaluation" / "test_queries_multidomain.json"
 ARTIFACTS_DIR = BASE_DIR / "systems_evaluation" / "artifacts"
 REPORT_PATH = BASE_DIR / "systems_evaluation" / "retrieval_results.md"
 ERROR_PATH = BASE_DIR / "systems_evaluation" / "error_analysis.md"

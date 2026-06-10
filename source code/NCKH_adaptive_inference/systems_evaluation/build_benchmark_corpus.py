@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from systems_evaluation.q2_corpus_blueprint import Q2_CORPUS_BLUEPRINT
+from systems_evaluation.benchmark_corpus_blueprint import BENCHMARK_CORPUS_BLUEPRINT
 
 TENANTS_DIR = BASE_DIR / "data" / "tenants"
 DIRECT_BINARY_EXTENSIONS = {".pdf", ".doc", ".docx", ".xls", ".xlsx", ".csv"}
@@ -26,7 +26,7 @@ TEXT_CONTENT_TYPES = {
     "text/html": ".md",
     "text/plain": ".txt",
 }
-USER_AGENT = "Mozilla/5.0 (compatible; Q2CorpusBuilder/1.0; +https://openai.com)"
+USER_AGENT = "Mozilla/5.0 (compatible; BenchmarkCorpusBuilder/1.0; +https://openai.com)"
 
 
 @dataclass
@@ -194,22 +194,22 @@ def _write_inventory(tenant_id: str, tenant_spec: dict[str, Any], prose_records:
 
 def _selected_tenants(raw: list[str]) -> list[str]:
     if not raw:
-        return sorted(Q2_CORPUS_BLUEPRINT)
+        return sorted(BENCHMARK_CORPUS_BLUEPRINT)
     selected: list[str] = []
     unknown: list[str] = []
     for tenant_id in raw:
-        if tenant_id in Q2_CORPUS_BLUEPRINT:
+        if tenant_id in BENCHMARK_CORPUS_BLUEPRINT:
             selected.append(tenant_id)
         else:
             unknown.append(tenant_id)
     if unknown:
-        raise SystemExit(f"Unknown Q2 tenant ids: {', '.join(sorted(unknown))}")
+        raise SystemExit(f"Unknown benchmark tenant ids: {', '.join(sorted(unknown))}")
     return sorted(set(selected))
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the Q2 tenant corpus pack from curated public sources.")
-    parser.add_argument("--tenant-id", action="append", default=[], help="Build only the given Q2 tenant. Repeatable.")
+    parser = argparse.ArgumentParser(description="Build the benchmark tenant corpus pack from curated public sources.")
+    parser.add_argument("--tenant-id", action="append", default=[], help="Build only the given benchmark tenant. Repeatable.")
     parser.add_argument("--force", action="store_true", help="Overwrite generated files if they already exist.")
     parser.add_argument("--prose-only", action="store_true", help="Download prose files only.")
     parser.add_argument("--structured-only", action="store_true", help="Generate structured CSV files only.")
@@ -220,7 +220,7 @@ def main() -> int:
 
     totals = BuildStats()
     for tenant_id in _selected_tenants(args.tenant_id):
-        tenant_spec = Q2_CORPUS_BLUEPRINT[tenant_id]
+        tenant_spec = BENCHMARK_CORPUS_BLUEPRINT[tenant_id]
         prose_records: list[dict[str, Any]] = []
         structured_records: list[dict[str, Any]] = []
         tenant_stats = BuildStats()

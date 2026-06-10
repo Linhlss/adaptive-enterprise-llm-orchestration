@@ -67,7 +67,7 @@ package "Unified Enterprise Serving Runtime" {
 }
 
 package "Systems Evaluation Layer" {
-  rectangle "Q2 benchmark packs\nmain | model | stability | isolation" as PACK
+  rectangle "Benchmark packs\nmain | model | stability | isolation" as PACK
   rectangle "Controlled replay\npolicy pass -> per-tier replay -> merged artifact" as REPLAY
   rectangle "Tables and benchmark summaries" as TABLES
 

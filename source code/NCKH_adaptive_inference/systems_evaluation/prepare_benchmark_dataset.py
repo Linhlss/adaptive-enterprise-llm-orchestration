@@ -21,9 +21,9 @@ def _load_json_list(path: Path) -> list[dict[str, Any]]:
 def _load_tenant_domains() -> dict[str, dict[str, str]]:
     raw = json.loads(TENANT_CONFIG.read_text(encoding="utf-8")) if TENANT_CONFIG.exists() else {}
     out: dict[str, dict[str, str]] = {}
-    q2_only = any(bool(cfg.get("q2_domain_pack")) for cfg in raw.values())
+    benchmark_only = any(bool(cfg.get("benchmark_domain_pack")) for cfg in raw.values())
     for tenant_id, cfg in raw.items():
-        if q2_only and not bool(cfg.get("q2_domain_pack")):
+        if benchmark_only and not bool(cfg.get("benchmark_domain_pack")):
             continue
         out[str(tenant_id)] = {
             "domain_id": str(cfg.get("domain_id") or "academic_admin"),
@@ -112,16 +112,16 @@ def _interleave_tenants(rows_by_tenant: dict[str, list[dict[str, Any]]]) -> list
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Build a Q2-strong balanced multi-domain benchmark dataset from source query files."
+        description="Build a strong-evidence balanced multi-domain benchmark dataset from source query files."
     )
     parser.add_argument(
         "--input",
         nargs="+",
         default=[
-            "systems_evaluation/test_queries_q2_source.json",
+            "systems_evaluation/test_queries_source.json",
         ],
     )
-    parser.add_argument("--output", default="systems_evaluation/test_queries_q2_multidomain.json")
+    parser.add_argument("--output", default="systems_evaluation/test_queries_multidomain.json")
     parser.add_argument("--cases-per-route-domain", type=int, default=12)
     parser.add_argument("--min-tenants-per-domain", type=int, default=2)
     parser.add_argument("--required-domains", type=int, default=3)
@@ -131,7 +131,7 @@ def main() -> int:
         default=[],
         help="Optional domain_id allow-list. If omitted, all domains found in the source rows are considered.",
     )
-    parser.add_argument("--id-prefix", default="Q2")
+    parser.add_argument("--id-prefix", default="BENCH")
     args = parser.parse_args()
 
     tenant_domains = _load_tenant_domains()
@@ -221,7 +221,7 @@ def main() -> int:
     route_counts = Counter(row["expected_route"] for row in selected)
     domain_counts = Counter(row["domain_id"] for row in selected)
     print(
-        f"Saved {len(selected)} Q2 cases to {output_path} | "
+        f"Saved {len(selected)} Benchmark cases to {output_path} | "
         f"domains={dict(domain_counts)} | routes={dict(route_counts)}"
     )
     return 0

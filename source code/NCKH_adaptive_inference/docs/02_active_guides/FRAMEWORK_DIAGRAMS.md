@@ -87,7 +87,7 @@ flowchart TB
     end
 
     subgraph EVAL["Systems Evaluation Layer"]
-        OBS --> PACK["Q2 benchmark packs<br/>main / model / stability / isolation"]
+        OBS --> PACK["Benchmark packs<br/>main / model / stability / isolation"]
         OBS --> REPLAY["Controlled replay<br/>policy pass -> per-tier replay -> merged artifact"]
         PACK --> TABLES["Tables and benchmark summaries"]
         REPLAY --> TABLES
@@ -116,7 +116,7 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    A["Q2 corpora<br/>3 domains<br/>2 content-bearing tenants per domain"] --> B["Source-pack generation"]
+    A["Benchmark corpora<br/>3 domains<br/>2 content-bearing tenants per domain"] --> B["Source query-pack construction"]
     B --> C["Balanced benchmark construction<br/>main / model / stability / isolation"]
     C --> D["Pack validation<br/>structure + semantics + readiness"]
 
@@ -171,7 +171,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    P1["Phase 1<br/>Scope and claim discipline<br/>lock multi-domain framing<br/>remove legacy overclaim"] --> P2["Phase 2<br/>Corpus and benchmark construction<br/>3 domains<br/>balanced Q2 packs"]
+    P1["Phase 1<br/>Scope and claim discipline<br/>lock multi-domain framing<br/>remove legacy overclaim"] --> P2["Phase 2<br/>Corpus and benchmark construction<br/>3 domains<br/>balanced benchmark packs"]
     P2 --> P3["Phase 3<br/>Serving runtime alignment<br/>policy layer<br/>route + model_class decision<br/>telemetry and safety"]
     P3 --> P4["Phase 4<br/>Paper-facing evaluation<br/>vLLM runs<br/>controlled replay<br/>main tables"]
     P4 --> OUT["Final artifact<br/>adaptive orchestration for multi-domain,<br/>multi-tenant enterprise LLM serving"]

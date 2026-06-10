@@ -470,7 +470,7 @@ def render_markdown(report: Dict[str, Any], label: str) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate answer-level predictions with lightweight lexical metrics.")
-    parser.add_argument("--dataset", default="systems_evaluation/test_queries_q2_multidomain.json")
+    parser.add_argument("--dataset", default="systems_evaluation/test_queries_multidomain.json")
     parser.add_argument("--predictions", required=True)
     parser.add_argument("--label", default="baseline")
     parser.add_argument("--output-json", default="")

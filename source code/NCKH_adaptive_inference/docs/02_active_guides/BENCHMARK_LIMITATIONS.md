@@ -1,6 +1,6 @@
 # Benchmark Limitations
 
-This document states the current benchmark limitations conservatively for the cleaned Q2 repo surface.
+This document states the current benchmark limitations conservatively for the cleaned repo surface.
 
 ## 1. Scope Discipline
 
@@ -21,7 +21,7 @@ It should not yet be read as:
 The paper-facing backend policy is:
 
 - `Ollama` for development and smoke
-- `vLLM` for official Q2 runs
+- `vLLM` for official benchmark runs
 
 If `vLLM` is not correctly serving the intended Qwen3-AWQ model ladder from the benchmark container, the benchmark is not ready for final evidence collection even if all dataset validators pass.
 
@@ -69,7 +69,7 @@ Interpretation rule:
 
 ## 6. Dataset Interpretation
 
-The Q2 packs are designed for orchestration evaluation:
+The benchmark packs are designed for orchestration evaluation:
 
 - route suitability
 - grounded answer behavior
@@ -85,7 +85,7 @@ Even after validation passes, the final benchmark may still drift if:
 
 - route prompts accidentally trigger tool inspectors instead of retrieval
 - backend identity or model exposure differs from what the benchmark policy expects
-- corpora change without regenerating the Q2 source pack
+- corpora change without regenerating the source pack
 
 For that reason, the safe sendable claim is:
 

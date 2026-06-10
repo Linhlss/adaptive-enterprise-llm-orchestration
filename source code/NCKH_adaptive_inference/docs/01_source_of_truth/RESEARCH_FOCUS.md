@@ -161,7 +161,7 @@ The repository already contains:
 
 It still needs to be interpreted carefully for the new aim:
 
-- the benchmark story depends on the Q2 multi-domain packs
+- the benchmark story depends on the active multi-domain benchmark packs
 - some comparison rows remain representative rather than external canonical reproductions
 - the router and prompts are more domain-portable than before, but the benchmark evidence still depends on the actual three-domain corpora
 
@@ -238,7 +238,7 @@ The roadmap can be understood in three phases:
 - prepare the three domain packs
 - make prompts and datasets domain-portable
 
-### Phase C: Q2 Benchmark Completion
+### Phase C: Benchmark Completion
 
 - benchmark the three fixed model tiers
 - benchmark fixed and adaptive comparisons

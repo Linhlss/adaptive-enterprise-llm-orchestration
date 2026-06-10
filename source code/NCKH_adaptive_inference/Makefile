@@ -1,36 +1,42 @@
 COMPOSE ?= docker compose
 
-Q2_SOURCE_DATASETS ?= systems_evaluation/test_queries_q2_source.json
-Q2_DATASET ?= systems_evaluation/test_queries_q2_multidomain.json
-Q2_MODEL_DATASET ?= systems_evaluation/test_queries_q2_model_sensitivity.json
-Q2_STABILITY_DATASET ?= systems_evaluation/test_queries_q2_stability_subset.json
-Q2_ISOLATION_DATASET ?= systems_evaluation/test_queries_q2_isolation.json
-Q2_BACKEND ?= vllm
+BENCHMARK_SOURCE_DATASET ?= systems_evaluation/test_queries_source.json
+BENCHMARK_DATASET ?= systems_evaluation/test_queries_multidomain.json
+MODEL_SENSITIVITY_DATASET ?= systems_evaluation/test_queries_model_sensitivity.json
+STABILITY_DATASET ?= systems_evaluation/test_queries_stability_subset.json
+ISOLATION_DATASET ?= systems_evaluation/test_queries_isolation.json
+BENCHMARK_BACKEND ?= vllm
 
-Q2_REPLAY_TRACE_LABEL ?= q2_joint_adaptive_policy_pass
-Q2_REPLAY_PREFIX ?= test_queries_q2_joint_replay
-Q2_REPLAY_MANIFEST ?= systems_evaluation/test_queries_q2_joint_replay_manifest.json
-Q2_REPLAY_STRONG_DATASET ?= systems_evaluation/test_queries_q2_joint_replay_strong_quality.json
-Q2_REPLAY_BALANCED_DATASET ?= systems_evaluation/test_queries_q2_joint_replay_balanced.json
-Q2_REPLAY_LIGHT_DATASET ?= systems_evaluation/test_queries_q2_joint_replay_light_latency.json
+REPLAY_TRACE_LABEL ?= benchmark_joint_adaptive_policy_pass
+REPLAY_PREFIX ?= test_queries_benchmark_joint_replay
+REPLAY_MANIFEST ?= systems_evaluation/test_queries_benchmark_joint_replay_manifest.json
+REPLAY_STRONG_DATASET ?= systems_evaluation/test_queries_benchmark_joint_replay_strong_quality.json
+REPLAY_BALANCED_DATASET ?= systems_evaluation/test_queries_benchmark_joint_replay_balanced.json
+REPLAY_LIGHT_DATASET ?= systems_evaluation/test_queries_benchmark_joint_replay_light_latency.json
 
-Q2_STABILITY_REPLAY_TRACE_LABEL ?= q2_stability_joint_adaptive_policy_pass
-Q2_STABILITY_REPLAY_PREFIX ?= test_queries_q2_stability_joint_replay
-Q2_STABILITY_REPLAY_MANIFEST ?= systems_evaluation/test_queries_q2_stability_joint_replay_manifest.json
-Q2_STABILITY_REPLAY_STRONG_DATASET ?= systems_evaluation/test_queries_q2_stability_joint_replay_strong_quality.json
-Q2_STABILITY_REPLAY_BALANCED_DATASET ?= systems_evaluation/test_queries_q2_stability_joint_replay_balanced.json
-Q2_STABILITY_REPLAY_LIGHT_DATASET ?= systems_evaluation/test_queries_q2_stability_joint_replay_light_latency.json
+STABILITY_REPLAY_TRACE_LABEL ?= benchmark_stability_joint_adaptive_policy_pass
+STABILITY_REPLAY_PREFIX ?= test_queries_benchmark_stability_joint_replay
+STABILITY_REPLAY_MANIFEST ?= systems_evaluation/test_queries_benchmark_stability_joint_replay_manifest.json
+STABILITY_REPLAY_STRONG_DATASET ?= systems_evaluation/test_queries_benchmark_stability_joint_replay_strong_quality.json
+STABILITY_REPLAY_BALANCED_DATASET ?= systems_evaluation/test_queries_benchmark_stability_joint_replay_balanced.json
+STABILITY_REPLAY_LIGHT_DATASET ?= systems_evaluation/test_queries_benchmark_stability_joint_replay_light_latency.json
 
 .PHONY: \
 	dev-build dev-up dev-shell app-up app-down ps logs bootstrap \
-	scaffold-q2-domains scaffold-q2-domains-apply scaffold-q2-domains-refresh \
-	build-q2-corpus build-q2-corpus-force audit-q2-corpus \
-	prepare-q2-source-pack prepare-q2-benchmark prepare-q2-model-sensitivity prepare-q2-stability-subset prepare-q2-isolation prepare-q2-pack \
-	validate-q2-pack validate-q2-model-sensitivity validate-q2-stability-subset validate-q2-isolation \
-	validate-q2-content-pack validate-q2-content-model validate-q2-content-stability validate-q2-content-isolation validate-q2-content \
-	check-q2-readiness prepare-q2-joint-replay prepare-q2-stability-joint-replay \
-	benchmark-q2-routeonly benchmark-q2-e2e benchmark-q2-joint-replay benchmark-q2-model-sensitivity benchmark-q2-stability benchmark-q2-isolation benchmark-q2-pack \
-	build-q2-main-table build-q2-model-sensitivity-table build-q2-stability-table build-q2-isolation-table \
+	initialize-benchmark-tenants initialize-benchmark-tenants-apply refresh-benchmark-tenants \
+	build-benchmark-corpus build-benchmark-corpus-force audit-benchmark-corpus \
+	prepare-source-query-pack prepare-benchmark-core prepare-model-sensitivity-pack prepare-stability-pack prepare-isolation-pack prepare-benchmark-pack \
+	validate-benchmark-pack validate-model-sensitivity-pack validate-stability-pack validate-isolation-pack \
+	validate-benchmark-content-pack validate-benchmark-content-model validate-benchmark-content-stability validate-benchmark-content-isolation validate-benchmark-content \
+	check-benchmark-readiness prepare-joint-replay prepare-stability-joint-replay \
+	benchmark-route-policy benchmark-end-to-end benchmark-joint-replay benchmark-model-sensitivity benchmark-stability benchmark-isolation benchmark-full-suite \
+	build-main-table build-model-sensitivity-table build-stability-table build-isolation-table \
+	build-benchmark-corpus build-benchmark-corpus-force audit-benchmark-corpus \
+	prepare-source-query-pack prepare-benchmark-pack prepare-model-sensitivity-pack prepare-stability-pack prepare-isolation-pack \
+	validate-benchmark-pack validate-model-sensitivity-pack validate-stability-pack validate-isolation-pack \
+	validate-benchmark-content check-benchmark-readiness \
+	benchmark-route-policy benchmark-end-to-end benchmark-joint-replay benchmark-model-sensitivity benchmark-stability benchmark-isolation benchmark-full-suite \
+	build-main-table build-model-sensitivity-table build-stability-table build-isolation-table \
 	clean-generated-reports clean-python-cache
 
 dev-build:
@@ -56,166 +62,166 @@ logs:
 
 bootstrap: dev-build dev-up app-up
 
-scaffold-q2-domains:
-	$(COMPOSE) exec dev python systems_evaluation/scaffold_q2_domains.py
+initialize-benchmark-tenants:
+	$(COMPOSE) exec dev python systems_evaluation/initialize_benchmark_tenants.py
 
-scaffold-q2-domains-apply:
-	$(COMPOSE) exec dev python systems_evaluation/scaffold_q2_domains.py --apply
+initialize-benchmark-tenants-apply:
+	$(COMPOSE) exec dev python systems_evaluation/initialize_benchmark_tenants.py --apply
 
-scaffold-q2-domains-refresh:
-	$(COMPOSE) exec dev python systems_evaluation/scaffold_q2_domains.py --apply --force
+refresh-benchmark-tenants:
+	$(COMPOSE) exec dev python systems_evaluation/initialize_benchmark_tenants.py --apply --force
 
-build-q2-corpus:
-	python3 systems_evaluation/build_q2_corpus.py
+build-benchmark-corpus:
+	python3 systems_evaluation/build_benchmark_corpus.py
 
-build-q2-corpus-force:
-	python3 systems_evaluation/build_q2_corpus.py --force
+build-benchmark-corpus-force:
+	python3 systems_evaluation/build_benchmark_corpus.py --force
 
-audit-q2-corpus:
-	python3 systems_evaluation/audit_q2_corpus.py
+audit-benchmark-corpus:
+	python3 systems_evaluation/audit_benchmark_corpus.py
 
-prepare-q2-source-pack:
-	python3 systems_evaluation/generate_q2_source_query_pack.py --output $(Q2_SOURCE_DATASETS)
+prepare-source-query-pack:
+	python3 systems_evaluation/build_source_query_pack.py --output $(BENCHMARK_SOURCE_DATASET)
 
-prepare-q2-benchmark: prepare-q2-source-pack
-	$(COMPOSE) exec dev python systems_evaluation/prepare_q2_benchmark_dataset.py --input $(Q2_SOURCE_DATASETS) --output $(Q2_DATASET)
+prepare-benchmark-core: prepare-source-query-pack
+	$(COMPOSE) exec dev python systems_evaluation/prepare_benchmark_dataset.py --input $(BENCHMARK_SOURCE_DATASET) --output $(BENCHMARK_DATASET)
 
-prepare-q2-model-sensitivity: prepare-q2-source-pack
-	$(COMPOSE) exec dev python systems_evaluation/prepare_q2_benchmark_dataset.py --input $(Q2_SOURCE_DATASETS) --output $(Q2_MODEL_DATASET) --cases-per-route-domain 6 --id-prefix Q2MODEL
+prepare-model-sensitivity-pack: prepare-source-query-pack
+	$(COMPOSE) exec dev python systems_evaluation/prepare_benchmark_dataset.py --input $(BENCHMARK_SOURCE_DATASET) --output $(MODEL_SENSITIVITY_DATASET) --cases-per-route-domain 6 --id-prefix MODEL
 
-prepare-q2-stability-subset: prepare-q2-source-pack
-	$(COMPOSE) exec dev python systems_evaluation/prepare_q2_benchmark_dataset.py --input $(Q2_SOURCE_DATASETS) --output $(Q2_STABILITY_DATASET) --cases-per-route-domain 6 --id-prefix Q2STAB
+prepare-stability-pack: prepare-source-query-pack
+	$(COMPOSE) exec dev python systems_evaluation/prepare_benchmark_dataset.py --input $(BENCHMARK_SOURCE_DATASET) --output $(STABILITY_DATASET) --cases-per-route-domain 6 --id-prefix STAB
 
-prepare-q2-isolation:
-	$(COMPOSE) exec dev python systems_evaluation/prepare_q2_isolation_dataset.py --output $(Q2_ISOLATION_DATASET)
+prepare-isolation-pack:
+	$(COMPOSE) exec dev python systems_evaluation/prepare_isolation_dataset.py --output $(ISOLATION_DATASET)
 
-prepare-q2-pack: prepare-q2-benchmark prepare-q2-model-sensitivity prepare-q2-stability-subset prepare-q2-isolation
+prepare-benchmark-pack: prepare-benchmark-core prepare-model-sensitivity-pack prepare-stability-pack prepare-isolation-pack
 
-validate-q2-pack:
-	$(COMPOSE) exec dev python systems_evaluation/validate_q2_benchmark_pack.py --dataset $(Q2_DATASET) --isolation-dataset $(Q2_ISOLATION_DATASET)
+validate-benchmark-pack:
+	$(COMPOSE) exec dev python systems_evaluation/validate_benchmark_pack.py --dataset $(BENCHMARK_DATASET) --isolation-dataset $(ISOLATION_DATASET)
 
-validate-q2-model-sensitivity:
-	$(COMPOSE) exec dev python systems_evaluation/validate_q2_benchmark_pack.py --dataset $(Q2_MODEL_DATASET) --cases-per-domain 24 --cases-per-route-domain 6 --skip-isolation-check
+validate-model-sensitivity-pack:
+	$(COMPOSE) exec dev python systems_evaluation/validate_benchmark_pack.py --dataset $(MODEL_SENSITIVITY_DATASET) --cases-per-domain 24 --cases-per-route-domain 6 --skip-isolation-check
 
-validate-q2-stability-subset:
-	$(COMPOSE) exec dev python systems_evaluation/validate_q2_benchmark_pack.py --dataset $(Q2_STABILITY_DATASET) --cases-per-domain 24 --cases-per-route-domain 6 --skip-isolation-check
+validate-stability-pack:
+	$(COMPOSE) exec dev python systems_evaluation/validate_benchmark_pack.py --dataset $(STABILITY_DATASET) --cases-per-domain 24 --cases-per-route-domain 6 --skip-isolation-check
 
-validate-q2-isolation:
-	$(COMPOSE) exec dev python systems_evaluation/validate_q2_benchmark_pack.py --isolation-only --isolation-dataset $(Q2_ISOLATION_DATASET)
+validate-isolation-pack:
+	$(COMPOSE) exec dev python systems_evaluation/validate_benchmark_pack.py --isolation-only --isolation-dataset $(ISOLATION_DATASET)
 
-validate-q2-content-pack:
-	python3 systems_evaluation/validate_q2_content_semantics.py --dataset $(Q2_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/q2_content_validation_main.json
+validate-benchmark-content-pack:
+	python3 systems_evaluation/validate_content_semantics.py --dataset $(BENCHMARK_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/benchmark_content_validation_main.json
 
-validate-q2-content-model:
-	python3 systems_evaluation/validate_q2_content_semantics.py --dataset $(Q2_MODEL_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/q2_content_validation_model.json
+validate-benchmark-content-model:
+	python3 systems_evaluation/validate_content_semantics.py --dataset $(MODEL_SENSITIVITY_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/benchmark_content_validation_model.json
 
-validate-q2-content-stability:
-	python3 systems_evaluation/validate_q2_content_semantics.py --dataset $(Q2_STABILITY_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/q2_content_validation_stability.json
+validate-benchmark-content-stability:
+	python3 systems_evaluation/validate_content_semantics.py --dataset $(STABILITY_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/benchmark_content_validation_stability.json
 
-validate-q2-content-isolation:
-	python3 systems_evaluation/validate_q2_content_semantics.py --dataset $(Q2_ISOLATION_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/q2_content_validation_isolation.json
+validate-benchmark-content-isolation:
+	python3 systems_evaluation/validate_content_semantics.py --dataset $(ISOLATION_DATASET) --strict-absent-keywords --output systems_evaluation/generated_reports/benchmark_content_validation_isolation.json
 
-validate-q2-content: validate-q2-content-pack validate-q2-content-model validate-q2-content-stability validate-q2-content-isolation
+validate-benchmark-content: validate-benchmark-content-pack validate-benchmark-content-model validate-benchmark-content-stability validate-benchmark-content-isolation
 
-check-q2-readiness: prepare-q2-source-pack
-	$(COMPOSE) exec dev python systems_evaluation/check_q2_readiness.py --input $(Q2_SOURCE_DATASETS)
+check-benchmark-readiness: prepare-source-query-pack
+	$(COMPOSE) exec dev python systems_evaluation/check_benchmark_readiness.py --input $(BENCHMARK_SOURCE_DATASET)
 
-prepare-q2-joint-replay: validate-q2-pack
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label $(Q2_REPLAY_TRACE_LABEL) --model-class adaptive --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/prepare_q2_controlled_replay.py --dataset $(Q2_DATASET) --trace systems_evaluation/generated_reports/$(Q2_REPLAY_TRACE_LABEL)_predictions.json --output-dir systems_evaluation --prefix $(Q2_REPLAY_PREFIX) --manifest $(Q2_REPLAY_MANIFEST)
+prepare-joint-replay: validate-benchmark-pack
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label $(REPLAY_TRACE_LABEL) --model-class adaptive --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/prepare_controlled_replay.py --dataset $(BENCHMARK_DATASET) --trace systems_evaluation/generated_reports/$(REPLAY_TRACE_LABEL)_predictions.json --output-dir systems_evaluation --prefix $(REPLAY_PREFIX) --manifest $(REPLAY_MANIFEST)
 
-prepare-q2-stability-joint-replay: validate-q2-stability-subset
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label $(Q2_STABILITY_REPLAY_TRACE_LABEL) --model-class adaptive --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/prepare_q2_controlled_replay.py --dataset $(Q2_STABILITY_DATASET) --trace systems_evaluation/generated_reports/$(Q2_STABILITY_REPLAY_TRACE_LABEL)_predictions.json --output-dir systems_evaluation --prefix $(Q2_STABILITY_REPLAY_PREFIX) --manifest $(Q2_STABILITY_REPLAY_MANIFEST)
+prepare-stability-joint-replay: validate-stability-pack
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label $(STABILITY_REPLAY_TRACE_LABEL) --model-class adaptive --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/prepare_controlled_replay.py --dataset $(STABILITY_DATASET) --trace systems_evaluation/generated_reports/$(STABILITY_REPLAY_TRACE_LABEL)_predictions.json --output-dir systems_evaluation --prefix $(STABILITY_REPLAY_PREFIX) --manifest $(STABILITY_REPLAY_MANIFEST)
 
-benchmark-q2-routeonly: validate-q2-pack
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_qwen3_14b_awq_routeonly --model-class strong-quality --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_qwen3_8b_awq_routeonly --model-class balanced --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_qwen3_4b_awq_routeonly --model-class light-latency --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_retrieval_routeonly --fixed-route-mode retrieval --model-class balanced --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_general_routeonly --fixed-route-mode general --model-class balanced --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_adaptive_path_only_routeonly --model-class balanced --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label $(Q2_REPLAY_TRACE_LABEL) --model-class adaptive --llm-backend $(Q2_BACKEND) --route-only
+benchmark-route-policy: validate-benchmark-pack
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_qwen3_14b_awq_routeonly --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_qwen3_8b_awq_routeonly --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_qwen3_4b_awq_routeonly --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_retrieval_routeonly --fixed-route-mode retrieval --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_general_routeonly --fixed-route-mode general --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_adaptive_path_only_routeonly --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label $(REPLAY_TRACE_LABEL) --model-class adaptive --llm-backend $(BENCHMARK_BACKEND) --route-only
 
-benchmark-q2-e2e: validate-q2-pack
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_qwen3_14b_awq_e2e --model-class strong-quality --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_qwen3_8b_awq_e2e --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_qwen3_4b_awq_e2e --model-class light-latency --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_retrieval_e2e --fixed-route-mode retrieval --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_fixed_general_e2e --fixed-route-mode general --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_DATASET) --label q2_adaptive_path_only_e2e --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
+benchmark-end-to-end: validate-benchmark-pack
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_qwen3_14b_awq_e2e --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_qwen3_8b_awq_e2e --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_qwen3_4b_awq_e2e --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_retrieval_e2e --fixed-route-mode retrieval --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_fixed_general_e2e --fixed-route-mode general --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(BENCHMARK_DATASET) --label benchmark_adaptive_path_only_e2e --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
 
-benchmark-q2-joint-replay: prepare-q2-joint-replay
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_REPLAY_STRONG_DATASET) --label q2_joint_adaptive_replay_strong --model-class strong-quality --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_REPLAY_BALANCED_DATASET) --label q2_joint_adaptive_replay_balanced --model-class balanced --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_REPLAY_LIGHT_DATASET) --label q2_joint_adaptive_replay_light --model-class light-latency --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/merge_q2_controlled_replay.py --dataset $(Q2_DATASET) --predictions systems_evaluation/generated_reports/q2_joint_adaptive_replay_strong_predictions.json systems_evaluation/generated_reports/q2_joint_adaptive_replay_balanced_predictions.json systems_evaluation/generated_reports/q2_joint_adaptive_replay_light_predictions.json --output systems_evaluation/generated_reports/q2_joint_adaptive_replay_predictions.json
-	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(Q2_DATASET) --predictions systems_evaluation/generated_reports/q2_joint_adaptive_replay_predictions.json --label q2_joint_adaptive_replay --output-json systems_evaluation/generated_reports/q2_joint_adaptive_replay_answer_report.json --output-md systems_evaluation/generated_reports/q2_joint_adaptive_replay_answer_report.md
+benchmark-joint-replay: prepare-joint-replay
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(REPLAY_STRONG_DATASET) --label benchmark_joint_adaptive_replay_strong --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(REPLAY_BALANCED_DATASET) --label benchmark_joint_adaptive_replay_balanced --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(REPLAY_LIGHT_DATASET) --label benchmark_joint_adaptive_replay_light --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/merge_controlled_replay.py --dataset $(BENCHMARK_DATASET) --predictions systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_strong_predictions.json systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_balanced_predictions.json systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_light_predictions.json --output systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_predictions.json
+	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(BENCHMARK_DATASET) --predictions systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_predictions.json --label benchmark_joint_adaptive_replay --output-json systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_answer_report.json --output-md systems_evaluation/generated_reports/benchmark_joint_adaptive_replay_answer_report.md
 
-benchmark-q2-model-sensitivity: validate-q2-model-sensitivity
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_MODEL_DATASET) --label q2_model_qwen3_14b_awq_routeonly --model-class strong-quality --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_MODEL_DATASET) --label q2_model_qwen3_8b_awq_routeonly --model-class balanced --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_MODEL_DATASET) --label q2_model_qwen3_4b_awq_routeonly --model-class light-latency --llm-backend $(Q2_BACKEND) --route-only
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_MODEL_DATASET) --label q2_model_qwen3_14b_awq_e2e --model-class strong-quality --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_MODEL_DATASET) --label q2_model_qwen3_8b_awq_e2e --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_MODEL_DATASET) --label q2_model_qwen3_4b_awq_e2e --model-class light-latency --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
+benchmark-model-sensitivity: validate-model-sensitivity-pack
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(MODEL_SENSITIVITY_DATASET) --label benchmark_model_qwen3_14b_awq_routeonly --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(MODEL_SENSITIVITY_DATASET) --label benchmark_model_qwen3_8b_awq_routeonly --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(MODEL_SENSITIVITY_DATASET) --label benchmark_model_qwen3_4b_awq_routeonly --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --route-only
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(MODEL_SENSITIVITY_DATASET) --label benchmark_model_qwen3_14b_awq_e2e --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(MODEL_SENSITIVITY_DATASET) --label benchmark_model_qwen3_8b_awq_e2e --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(MODEL_SENSITIVITY_DATASET) --label benchmark_model_qwen3_4b_awq_e2e --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
 
-benchmark-q2-stability: prepare-q2-stability-joint-replay
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_adaptive_path_only_r1 --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_fixed_qwen3_14b_awq_r1 --model-class strong-quality --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_fixed_retrieval_r1 --fixed-route-mode retrieval --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_adaptive_path_only_r2 --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_fixed_qwen3_14b_awq_r2 --model-class strong-quality --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_fixed_retrieval_r2 --fixed-route-mode retrieval --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_adaptive_path_only_r3 --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_fixed_qwen3_14b_awq_r3 --model-class strong-quality --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_DATASET) --label q2_stability_fixed_retrieval_r3 --fixed-route-mode retrieval --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_STRONG_DATASET) --label q2_stability_joint_adaptive_replay_strong_r1 --model-class strong-quality --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_BALANCED_DATASET) --label q2_stability_joint_adaptive_replay_balanced_r1 --model-class balanced --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_LIGHT_DATASET) --label q2_stability_joint_adaptive_replay_light_r1 --model-class light-latency --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/merge_q2_controlled_replay.py --dataset $(Q2_STABILITY_DATASET) --predictions systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_strong_r1_predictions.json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_balanced_r1_predictions.json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_light_r1_predictions.json --output systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r1_predictions.json
-	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(Q2_STABILITY_DATASET) --predictions systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r1_predictions.json --label q2_stability_joint_adaptive_replay_r1 --output-json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r1_answer_report.json --output-md systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r1_answer_report.md
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_STRONG_DATASET) --label q2_stability_joint_adaptive_replay_strong_r2 --model-class strong-quality --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_BALANCED_DATASET) --label q2_stability_joint_adaptive_replay_balanced_r2 --model-class balanced --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_LIGHT_DATASET) --label q2_stability_joint_adaptive_replay_light_r2 --model-class light-latency --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/merge_q2_controlled_replay.py --dataset $(Q2_STABILITY_DATASET) --predictions systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_strong_r2_predictions.json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_balanced_r2_predictions.json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_light_r2_predictions.json --output systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r2_predictions.json
-	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(Q2_STABILITY_DATASET) --predictions systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r2_predictions.json --label q2_stability_joint_adaptive_replay_r2 --output-json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r2_answer_report.json --output-md systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r2_answer_report.md
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_STRONG_DATASET) --label q2_stability_joint_adaptive_replay_strong_r3 --model-class strong-quality --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_BALANCED_DATASET) --label q2_stability_joint_adaptive_replay_balanced_r3 --model-class balanced --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_STABILITY_REPLAY_LIGHT_DATASET) --label q2_stability_joint_adaptive_replay_light_r3 --model-class light-latency --llm-backend $(Q2_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
-	$(COMPOSE) exec dev python systems_evaluation/merge_q2_controlled_replay.py --dataset $(Q2_STABILITY_DATASET) --predictions systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_strong_r3_predictions.json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_balanced_r3_predictions.json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_light_r3_predictions.json --output systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r3_predictions.json
-	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(Q2_STABILITY_DATASET) --predictions systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r3_predictions.json --label q2_stability_joint_adaptive_replay_r3 --output-json systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r3_answer_report.json --output-md systems_evaluation/generated_reports/q2_stability_joint_adaptive_replay_r3_answer_report.md
+benchmark-stability: prepare-stability-joint-replay
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_adaptive_path_only_r1 --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_fixed_qwen3_14b_awq_r1 --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_fixed_retrieval_r1 --fixed-route-mode retrieval --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_adaptive_path_only_r2 --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_fixed_qwen3_14b_awq_r2 --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_fixed_retrieval_r2 --fixed-route-mode retrieval --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_adaptive_path_only_r3 --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_fixed_qwen3_14b_awq_r3 --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_DATASET) --label benchmark_stability_fixed_retrieval_r3 --fixed-route-mode retrieval --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_STRONG_DATASET) --label benchmark_stability_joint_adaptive_replay_strong_r1 --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_BALANCED_DATASET) --label benchmark_stability_joint_adaptive_replay_balanced_r1 --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_LIGHT_DATASET) --label benchmark_stability_joint_adaptive_replay_light_r1 --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/merge_controlled_replay.py --dataset $(STABILITY_DATASET) --predictions systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_strong_r1_predictions.json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_balanced_r1_predictions.json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_light_r1_predictions.json --output systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r1_predictions.json
+	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(STABILITY_DATASET) --predictions systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r1_predictions.json --label benchmark_stability_joint_adaptive_replay_r1 --output-json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r1_answer_report.json --output-md systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r1_answer_report.md
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_STRONG_DATASET) --label benchmark_stability_joint_adaptive_replay_strong_r2 --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_BALANCED_DATASET) --label benchmark_stability_joint_adaptive_replay_balanced_r2 --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_LIGHT_DATASET) --label benchmark_stability_joint_adaptive_replay_light_r2 --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/merge_controlled_replay.py --dataset $(STABILITY_DATASET) --predictions systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_strong_r2_predictions.json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_balanced_r2_predictions.json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_light_r2_predictions.json --output systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r2_predictions.json
+	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(STABILITY_DATASET) --predictions systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r2_predictions.json --label benchmark_stability_joint_adaptive_replay_r2 --output-json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r2_answer_report.json --output-md systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r2_answer_report.md
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_STRONG_DATASET) --label benchmark_stability_joint_adaptive_replay_strong_r3 --model-class strong-quality --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_BALANCED_DATASET) --label benchmark_stability_joint_adaptive_replay_balanced_r3 --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(STABILITY_REPLAY_LIGHT_DATASET) --label benchmark_stability_joint_adaptive_replay_light_r3 --model-class light-latency --llm-backend $(BENCHMARK_BACKEND) --replay-route-from-dataset --warmup --warmup-max-tenants 6
+	$(COMPOSE) exec dev python systems_evaluation/merge_controlled_replay.py --dataset $(STABILITY_DATASET) --predictions systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_strong_r3_predictions.json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_balanced_r3_predictions.json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_light_r3_predictions.json --output systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r3_predictions.json
+	$(COMPOSE) exec dev python systems_evaluation/evaluate_answers.py --dataset $(STABILITY_DATASET) --predictions systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r3_predictions.json --label benchmark_stability_joint_adaptive_replay_r3 --output-json systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r3_answer_report.json --output-md systems_evaluation/generated_reports/benchmark_stability_joint_adaptive_replay_r3_answer_report.md
 
-benchmark-q2-isolation: validate-q2-isolation
-	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(Q2_ISOLATION_DATASET) --label q2_isolation_e2e --model-class balanced --llm-backend $(Q2_BACKEND) --warmup --warmup-max-tenants 6
+benchmark-isolation: validate-isolation-pack
+	$(COMPOSE) exec dev python systems_evaluation/run_real_benchmark.py --dataset $(ISOLATION_DATASET) --label benchmark_isolation_e2e --model-class balanced --llm-backend $(BENCHMARK_BACKEND) --warmup --warmup-max-tenants 6
 
-build-q2-main-table:
-	$(COMPOSE) exec dev python systems_evaluation/build_main_comparison_table.py --dataset $(Q2_DATASET) --output-prefix q2_main_cross_domain_table \
-		--row "Fixed Qwen3-14B-AWQ|fixed_model|q2_fixed_qwen3_14b_awq_routeonly_predictions.json|q2_fixed_qwen3_14b_awq_e2e_predictions.json|q2_fixed_qwen3_14b_awq_e2e_answer_report.json" \
-		--row "Fixed Qwen3-8B-AWQ|fixed_model|q2_fixed_qwen3_8b_awq_routeonly_predictions.json|q2_fixed_qwen3_8b_awq_e2e_predictions.json|q2_fixed_qwen3_8b_awq_e2e_answer_report.json" \
-		--row "Fixed Qwen3-4B-AWQ|fixed_model|q2_fixed_qwen3_4b_awq_routeonly_predictions.json|q2_fixed_qwen3_4b_awq_e2e_predictions.json|q2_fixed_qwen3_4b_awq_e2e_answer_report.json" \
-		--row "Fixed retrieval|fixed_path|q2_fixed_retrieval_routeonly_predictions.json|q2_fixed_retrieval_e2e_predictions.json|q2_fixed_retrieval_e2e_answer_report.json" \
-		--row "Fixed general|fixed_path|q2_fixed_general_routeonly_predictions.json|q2_fixed_general_e2e_predictions.json|q2_fixed_general_e2e_answer_report.json" \
-		--row "Adaptive path-only|adaptive_path|q2_adaptive_path_only_routeonly_predictions.json|q2_adaptive_path_only_e2e_predictions.json|q2_adaptive_path_only_e2e_answer_report.json" \
-		--row "Joint adaptive path+model replay|joint_adaptive_replay|$(Q2_REPLAY_TRACE_LABEL)_predictions.json|q2_joint_adaptive_replay_predictions.json|q2_joint_adaptive_replay_answer_report.json"
+build-main-table:
+	$(COMPOSE) exec dev python systems_evaluation/build_main_comparison_table.py --dataset $(BENCHMARK_DATASET) --output-prefix benchmark_main_cross_domain_table \
+		--row "Fixed Qwen3-14B-AWQ|fixed_model|benchmark_fixed_qwen3_14b_awq_routeonly_predictions.json|benchmark_fixed_qwen3_14b_awq_e2e_predictions.json|benchmark_fixed_qwen3_14b_awq_e2e_answer_report.json" \
+		--row "Fixed Qwen3-8B-AWQ|fixed_model|benchmark_fixed_qwen3_8b_awq_routeonly_predictions.json|benchmark_fixed_qwen3_8b_awq_e2e_predictions.json|benchmark_fixed_qwen3_8b_awq_e2e_answer_report.json" \
+		--row "Fixed Qwen3-4B-AWQ|fixed_model|benchmark_fixed_qwen3_4b_awq_routeonly_predictions.json|benchmark_fixed_qwen3_4b_awq_e2e_predictions.json|benchmark_fixed_qwen3_4b_awq_e2e_answer_report.json" \
+		--row "Fixed retrieval|fixed_path|benchmark_fixed_retrieval_routeonly_predictions.json|benchmark_fixed_retrieval_e2e_predictions.json|benchmark_fixed_retrieval_e2e_answer_report.json" \
+		--row "Fixed general|fixed_path|benchmark_fixed_general_routeonly_predictions.json|benchmark_fixed_general_e2e_predictions.json|benchmark_fixed_general_e2e_answer_report.json" \
+		--row "Adaptive path-only|adaptive_path|benchmark_adaptive_path_only_routeonly_predictions.json|benchmark_adaptive_path_only_e2e_predictions.json|benchmark_adaptive_path_only_e2e_answer_report.json" \
+		--row "Joint adaptive path+model replay|joint_adaptive_replay|$(REPLAY_TRACE_LABEL)_predictions.json|benchmark_joint_adaptive_replay_predictions.json|benchmark_joint_adaptive_replay_answer_report.json"
 
-build-q2-model-sensitivity-table:
-	$(COMPOSE) exec dev python systems_evaluation/build_main_comparison_table.py --dataset $(Q2_MODEL_DATASET) --output-prefix q2_model_sensitivity_table \
-		--row "Qwen3-14B-AWQ|fixed_model|q2_model_qwen3_14b_awq_routeonly_predictions.json|q2_model_qwen3_14b_awq_e2e_predictions.json|q2_model_qwen3_14b_awq_e2e_answer_report.json" \
-		--row "Qwen3-8B-AWQ|fixed_model|q2_model_qwen3_8b_awq_routeonly_predictions.json|q2_model_qwen3_8b_awq_e2e_predictions.json|q2_model_qwen3_8b_awq_e2e_answer_report.json" \
-		--row "Qwen3-4B-AWQ|fixed_model|q2_model_qwen3_4b_awq_routeonly_predictions.json|q2_model_qwen3_4b_awq_e2e_predictions.json|q2_model_qwen3_4b_awq_e2e_answer_report.json"
+build-model-sensitivity-table:
+	$(COMPOSE) exec dev python systems_evaluation/build_main_comparison_table.py --dataset $(MODEL_SENSITIVITY_DATASET) --output-prefix benchmark_model_sensitivity_table \
+		--row "Qwen3-14B-AWQ|fixed_model|benchmark_model_qwen3_14b_awq_routeonly_predictions.json|benchmark_model_qwen3_14b_awq_e2e_predictions.json|benchmark_model_qwen3_14b_awq_e2e_answer_report.json" \
+		--row "Qwen3-8B-AWQ|fixed_model|benchmark_model_qwen3_8b_awq_routeonly_predictions.json|benchmark_model_qwen3_8b_awq_e2e_predictions.json|benchmark_model_qwen3_8b_awq_e2e_answer_report.json" \
+		--row "Qwen3-4B-AWQ|fixed_model|benchmark_model_qwen3_4b_awq_routeonly_predictions.json|benchmark_model_qwen3_4b_awq_e2e_predictions.json|benchmark_model_qwen3_4b_awq_e2e_answer_report.json"
 
-build-q2-stability-table:
-	$(COMPOSE) exec dev python systems_evaluation/build_variance_table.py --dataset $(Q2_STABILITY_DATASET) --output-prefix q2_stability_table \
-		--row "Adaptive path-only|q2_stability_adaptive_path_only_r1_predictions.json|q2_stability_adaptive_path_only_r1_answer_report.json|q2_stability_adaptive_path_only_r2_predictions.json|q2_stability_adaptive_path_only_r2_answer_report.json|q2_stability_adaptive_path_only_r3_predictions.json|q2_stability_adaptive_path_only_r3_answer_report.json" \
-		--row "Joint adaptive path+model replay|q2_stability_joint_adaptive_replay_r1_predictions.json|q2_stability_joint_adaptive_replay_r1_answer_report.json|q2_stability_joint_adaptive_replay_r2_predictions.json|q2_stability_joint_adaptive_replay_r2_answer_report.json|q2_stability_joint_adaptive_replay_r3_predictions.json|q2_stability_joint_adaptive_replay_r3_answer_report.json" \
-		--row "Fixed Qwen3-14B-AWQ|q2_stability_fixed_qwen3_14b_awq_r1_predictions.json|q2_stability_fixed_qwen3_14b_awq_r1_answer_report.json|q2_stability_fixed_qwen3_14b_awq_r2_predictions.json|q2_stability_fixed_qwen3_14b_awq_r2_answer_report.json|q2_stability_fixed_qwen3_14b_awq_r3_predictions.json|q2_stability_fixed_qwen3_14b_awq_r3_answer_report.json" \
-		--row "Fixed retrieval|q2_stability_fixed_retrieval_r1_predictions.json|q2_stability_fixed_retrieval_r1_answer_report.json|q2_stability_fixed_retrieval_r2_predictions.json|q2_stability_fixed_retrieval_r2_answer_report.json|q2_stability_fixed_retrieval_r3_predictions.json|q2_stability_fixed_retrieval_r3_answer_report.json"
+build-stability-table:
+	$(COMPOSE) exec dev python systems_evaluation/build_variance_table.py --dataset $(STABILITY_DATASET) --output-prefix benchmark_stability_table \
+		--row "Adaptive path-only|benchmark_stability_adaptive_path_only_r1_predictions.json|benchmark_stability_adaptive_path_only_r1_answer_report.json|benchmark_stability_adaptive_path_only_r2_predictions.json|benchmark_stability_adaptive_path_only_r2_answer_report.json|benchmark_stability_adaptive_path_only_r3_predictions.json|benchmark_stability_adaptive_path_only_r3_answer_report.json" \
+		--row "Joint adaptive path+model replay|benchmark_stability_joint_adaptive_replay_r1_predictions.json|benchmark_stability_joint_adaptive_replay_r1_answer_report.json|benchmark_stability_joint_adaptive_replay_r2_predictions.json|benchmark_stability_joint_adaptive_replay_r2_answer_report.json|benchmark_stability_joint_adaptive_replay_r3_predictions.json|benchmark_stability_joint_adaptive_replay_r3_answer_report.json" \
+		--row "Fixed Qwen3-14B-AWQ|benchmark_stability_fixed_qwen3_14b_awq_r1_predictions.json|benchmark_stability_fixed_qwen3_14b_awq_r1_answer_report.json|benchmark_stability_fixed_qwen3_14b_awq_r2_predictions.json|benchmark_stability_fixed_qwen3_14b_awq_r2_answer_report.json|benchmark_stability_fixed_qwen3_14b_awq_r3_predictions.json|benchmark_stability_fixed_qwen3_14b_awq_r3_answer_report.json" \
+		--row "Fixed retrieval|benchmark_stability_fixed_retrieval_r1_predictions.json|benchmark_stability_fixed_retrieval_r1_answer_report.json|benchmark_stability_fixed_retrieval_r2_predictions.json|benchmark_stability_fixed_retrieval_r2_answer_report.json|benchmark_stability_fixed_retrieval_r3_predictions.json|benchmark_stability_fixed_retrieval_r3_answer_report.json"
 
-build-q2-isolation-table:
-	$(COMPOSE) exec dev python systems_evaluation/build_isolation_summary.py --dataset $(Q2_ISOLATION_DATASET) --predictions systems_evaluation/generated_reports/q2_isolation_e2e_predictions.json --output-prefix q2_isolation_summary
+build-isolation-table:
+	$(COMPOSE) exec dev python systems_evaluation/build_isolation_summary.py --dataset $(ISOLATION_DATASET) --predictions systems_evaluation/generated_reports/benchmark_isolation_e2e_predictions.json --output-prefix benchmark_isolation_summary
 
-benchmark-q2-pack: prepare-q2-pack validate-q2-pack validate-q2-model-sensitivity validate-q2-stability-subset validate-q2-isolation validate-q2-content benchmark-q2-routeonly benchmark-q2-e2e benchmark-q2-joint-replay benchmark-q2-model-sensitivity benchmark-q2-stability benchmark-q2-isolation build-q2-main-table build-q2-model-sensitivity-table build-q2-stability-table build-q2-isolation-table
+benchmark-full-suite: prepare-benchmark-pack validate-benchmark-pack validate-model-sensitivity-pack validate-stability-pack validate-isolation-pack validate-benchmark-content benchmark-route-policy benchmark-end-to-end benchmark-joint-replay benchmark-model-sensitivity benchmark-stability benchmark-isolation build-main-table build-model-sensitivity-table build-stability-table build-isolation-table
 
 clean-generated-reports:
 	rm -f systems_evaluation/generated_reports/*.json systems_evaluation/generated_reports/*.md

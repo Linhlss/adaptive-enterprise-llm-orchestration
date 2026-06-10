@@ -26,20 +26,20 @@ What is implemented:
 - FastAPI-based serving runtime in `enterprise_runtime/`
 - heuristic path router with route telemetry
 - tenant-aware retrieval, file/tool path, memory, and runtime metadata
-- Q2 multi-domain corpus scaffold with 6 tenants across 3 domains
+- structured multi-domain benchmark corpus with 6 tenants across 3 domains
 - benchmark builders, validators, isolation pack, and controlled replay pipeline
 
 What is validated:
 
-- Q2 source-pack generation from the current tenant corpora
-- balanced Q2 benchmark-pack construction
+- source query-pack construction from the current tenant corpora
+- balanced benchmark-pack construction
 - strict semantic validation for main/model/stability/isolation packs
 - controlled replay data preparation for joint `path + model-tier` evaluation
 
 What is still in progress:
 
 - paper-facing full benchmark execution on `vLLM`
-- retrieval/source prompts and routing behavior hardening across all Q2 cases
+- retrieval/source prompts and routing behavior hardening across benchmark cases
 - final benchmark tables backed by clean end-to-end runs
 
 This is best read as a runnable prototype with a validated benchmark construction pipeline, not as a benchmark-complete artifact.
@@ -48,7 +48,7 @@ This is best read as a runnable prototype with a validated benchmark constructio
 
 - `enterprise_runtime/`: serving runtime, router, workflow, retrieval, tools, API
 - `systems_evaluation/`: benchmark preparation, validation, execution, replay, reporting
-- `data/tenants/`: tenant-scoped corpora for the Q2 benchmark packs
+- `data/tenants/`: tenant-scoped corpora for the benchmark packs
 - `config/tenants.json`: tenant/domain metadata
 - `docs/`: research framing, setup, validation, limitations, public-facing status
 
@@ -85,42 +85,42 @@ Open a shell in the dev container:
 make dev-shell
 ```
 
-## Q2 Workflow
+## Benchmark Workflow
 
-Build or audit the Q2 corpora:
+Build or audit the benchmark corpora:
 
 ```bash
-make build-q2-corpus
-make audit-q2-corpus
+make build-benchmark-corpus
+make audit-benchmark-corpus
 ```
 
-Prepare and validate the paper-facing Q2 packs:
+Prepare and validate the paper-facing benchmark packs:
 
 ```bash
-make prepare-q2-pack
-make validate-q2-pack
-make validate-q2-content
-make check-q2-readiness
+make prepare-benchmark-pack
+make validate-benchmark-pack
+make validate-benchmark-content
+make check-benchmark-readiness
 ```
 
 Run paper-facing benchmark stages:
 
 ```bash
-make benchmark-q2-routeonly
-make benchmark-q2-e2e
-make benchmark-q2-joint-replay
-make benchmark-q2-model-sensitivity
-make benchmark-q2-stability
-make benchmark-q2-isolation
+make benchmark-route-policy
+make benchmark-end-to-end
+make benchmark-joint-replay
+make benchmark-model-sensitivity
+make benchmark-stability
+make benchmark-isolation
 ```
 
 Build tables from completed runs:
 
 ```bash
-make build-q2-main-table
-make build-q2-model-sensitivity-table
-make build-q2-stability-table
-make build-q2-isolation-table
+make build-main-table
+make build-model-sensitivity-table
+make build-stability-table
+make build-isolation-table
 ```
 
 ## Backend Policy

@@ -40,7 +40,7 @@ def _base_profile(domain_id: str, domain_name: str, tenant_id: str, persona: str
         "display_name": tenant_id.replace("_", " ").title(),
         "domain_id": domain_id,
         "domain_name": domain_name,
-        "q2_domain_pack": True,
+        "benchmark_domain_pack": True,
         "persona": persona,
         "language_hint": "Automatically follow the question language",
         "top_k": 4,
@@ -71,10 +71,10 @@ def _ensure_tenant_dirs(tenant_id: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Create Q2 domain tenant scaffolding without generating benchmark evidence."
+        description="Initialize benchmark tenant profiles and directories without generating benchmark evidence."
     )
     parser.add_argument("--apply", action="store_true", help="Write config/tenant directories. Without this flag, dry-run only.")
-    parser.add_argument("--force", action="store_true", help="Refresh existing Q2 tenant configs to the current source-of-truth defaults.")
+    parser.add_argument("--force", action="store_true", help="Refresh existing benchmark tenant configs to the current source-of-truth defaults.")
     args = parser.parse_args()
 
     configs = _load_configs()
@@ -90,7 +90,7 @@ def main() -> int:
 
     existing = sorted(set(configs) & set(planned))
     missing = sorted(set(planned) - set(configs))
-    print(f"Q2 scaffold tenants missing={missing}")
+    print(f"benchmark tenant profiles missing={missing}")
     if existing:
         action = "will be refreshed" if args.force else "will not be overwritten"
         print(f"Existing tenant ids {action}: {existing}")
@@ -107,7 +107,7 @@ def main() -> int:
     TENANT_CONFIG.parent.mkdir(parents=True, exist_ok=True)
     TENANT_CONFIG.write_text(json.dumps(configs, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
-        f"Created/refreshed {len(target_ids)} tenant scaffolds. "
+        f"Created/refreshed {len(target_ids)} benchmark tenant profiles. "
         "Add real corpus files under data/tenants/<tenant_id>/files/."
     )
     return 0

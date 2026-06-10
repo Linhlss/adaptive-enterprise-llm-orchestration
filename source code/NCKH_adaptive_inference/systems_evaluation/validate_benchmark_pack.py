@@ -45,9 +45,9 @@ def _tenant_domain(tenant_id: str, configs: dict[str, dict[str, Any]]) -> tuple[
     cfg = configs.get(tenant_id)
     if not cfg:
         _fail(f"Tenant `{tenant_id}` exists in dataset but not in config/tenants.json.")
-    q2_only = any(bool(item.get("q2_domain_pack")) for item in configs.values())
-    if q2_only and not bool(cfg.get("q2_domain_pack")):
-        _fail(f"Tenant `{tenant_id}` is not marked q2_domain_pack=true.")
+    benchmark_only = any(bool(item.get("benchmark_domain_pack")) for item in configs.values())
+    if benchmark_only and not bool(cfg.get("benchmark_domain_pack")):
+        _fail(f"Tenant `{tenant_id}` is not marked benchmark_domain_pack=true.")
     domain_id = str(cfg.get("domain_id") or "").strip()
     domain_name = str(cfg.get("domain_name") or "").strip()
     if not domain_id or not domain_name:
@@ -115,7 +115,7 @@ def _validate_isolation_pack(
         if target_domain_id != row_domain_id:
             _fail(
                 f"Isolation case {row.get('id')} crosses domain {row_domain_id}->{target_domain_id}; "
-                "Q2 core isolation probes must stay within domain tenant pairs."
+                "Benchmark core isolation probes must stay within domain tenant pairs."
             )
         if target_tenant_id == tenant_id:
             _fail(f"Isolation case {row.get('id')} targets the same tenant.")
@@ -151,15 +151,15 @@ def _validate_isolation_pack(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate the Q2-strong multi-domain benchmark pack.")
-    parser.add_argument("--dataset", default="systems_evaluation/test_queries_q2_multidomain.json")
+    parser = argparse.ArgumentParser(description="Validate the strong-evidence multi-domain benchmark pack.")
+    parser.add_argument("--dataset", default="systems_evaluation/test_queries_multidomain.json")
     parser.add_argument("--domains", type=int, default=3)
     parser.add_argument("--tenants-per-domain", type=int, default=2)
     parser.add_argument("--cases-per-domain", type=int, default=48)
     parser.add_argument("--cases-per-route-domain", type=int, default=12)
     parser.add_argument("--min-isolation-probes", type=int, default=48)
-    parser.add_argument("--isolation-dataset", default="systems_evaluation/test_queries_q2_isolation.json")
-    parser.add_argument("--isolation-only", action="store_true", help="Validate only the Q2 isolation dataset.")
+    parser.add_argument("--isolation-dataset", default="systems_evaluation/test_queries_isolation.json")
+    parser.add_argument("--isolation-only", action="store_true", help="Validate only the Benchmark isolation dataset.")
     parser.add_argument("--skip-isolation-check", action="store_true")
     parser.add_argument(
         "--skip-corpus-check",
@@ -178,7 +178,7 @@ def main() -> int:
             min_probes=args.min_isolation_probes,
         )
         _validate_model_policy(configs)
-        print("PASS: Q2 isolation pack validation completed.")
+        print("PASS: Benchmark isolation pack validation completed.")
         return 0
 
     rows = _load_cases(Path(args.dataset))
@@ -268,7 +268,7 @@ def main() -> int:
         )
 
     _validate_model_policy(configs)
-    print("PASS: Q2 benchmark pack validation completed.")
+    print("PASS: benchmark pack validation completed.")
     print(
         f"INFO: total={len(rows)} domains={dict(by_domain)} "
         f"tenant_counts={ {k: len(v) for k, v in tenants_by_domain.items()} }"

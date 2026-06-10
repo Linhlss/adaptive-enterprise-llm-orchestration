@@ -399,7 +399,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--host", default=DEFAULT_API_HOST, help="Host for the backend API.")
     parser.add_argument("--api-port", type=int, default=DEFAULT_API_PORT, help="Port for the backend API.")
     parser.add_argument("--ui-port", type=int, default=DEFAULT_STREAMLIT_PORT, help="Port for the Streamlit UI.")
-    parser.add_argument("--dataset", default="systems_evaluation/test_queries_q2_multidomain.json", help="Dataset used for benchmark runs.")
+    parser.add_argument("--dataset", default="systems_evaluation/test_queries_multidomain.json", help="Dataset used for benchmark runs.")
     parser.add_argument(
         "--setup",
         choices=["auto", "none", "runtime", "full"],

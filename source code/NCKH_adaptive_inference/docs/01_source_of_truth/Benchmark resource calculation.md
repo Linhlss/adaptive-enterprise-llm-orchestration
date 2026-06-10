@@ -1,8 +1,8 @@
-# Q2 Benchmark Resource Planning
+# Benchmark Resource Planning
 
 ## 1. Purpose
 
-This document summarizes the **external resources** required for the Q2 benchmark program.
+This document summarizes the **external resources** required for the benchmark program.
 
 It is not a code-design document. Its role is to keep the repository, environment configuration, benchmark scripts, and paper claims aligned with the actual hardware and deployment budget.
 
@@ -73,7 +73,7 @@ Recommended role split:
 
 ## 5. GPU Budget Estimate
 
-Typical Q2 execution groups:
+Typical execution groups:
 
 | Benchmark Cluster | Goal | Estimated Time |
 | --- | --- | --- |

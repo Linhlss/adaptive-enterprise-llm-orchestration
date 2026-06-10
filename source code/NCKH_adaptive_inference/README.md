@@ -1,11 +1,11 @@
 # Adaptive Orchestration for Multi-Domain, Multi-Tenant Enterprise LLM Serving
 
-This repository contains a runnable research prototype for adaptive enterprise LLM orchestration and the current Q2 benchmark-construction pipeline.
+This repository contains a runnable research prototype for adaptive enterprise LLM orchestration and the current multi-domain benchmark-construction pipeline.
 
 Current interpretation:
 
 - multi-tenant runtime that decides among retrieval, tool use, general generation, and safe refusal
-- Q2 benchmark workflow for multi-domain evaluation
+- benchmark workflow for multi-domain evaluation
 - controlled replay for joint `path + model-tier` evaluation under single-GPU constraints
 
 This repository should be read as:
@@ -39,22 +39,17 @@ Start here:
 ```bash
 cp .env.example .env
 make bootstrap
-make build-q2-corpus
-make prepare-q2-pack
-make validate-q2-pack
-make validate-q2-content
-make check-q2-readiness
+make build-benchmark-corpus
+make prepare-benchmark-pack
+make validate-benchmark-pack
+make validate-benchmark-content
+make check-benchmark-readiness
 ```
 
-Move to `benchmark-q2-*` targets only after backend readiness is verified.
+Move to the benchmark execution targets only after backend readiness is verified.
 
 ## Scope Notes
 
 - `Ollama` is for local smoke and development.
-- `vLLM` is the intended backend for official Q2 benchmark runs.
+- `vLLM` is the intended backend for official benchmark runs.
 - Joint online multi-model serving is not claimed; model-tier experiments use controlled replay unless explicitly stated otherwise.
-
-## External Proposal Materials
-
-- [Cold email draft for Dr. Qinghua Lu](docs/02_active_guides/COLD_EMAIL_PROPOSAL_DR_LU.md)
-- [Relevance brief for Dr. Qinghua Lu](docs/02_active_guides/RELEVANCE_BRIEF_DR_LU.md)

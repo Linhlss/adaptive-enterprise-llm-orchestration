@@ -356,7 +356,7 @@ def validate_dataset(
     strict_absent_keywords: bool,
 ) -> tuple[list[str], list[str], dict[str, Any]]:
     rows = _load_rows(dataset_path)
-    q2_tenants = sorted(
+    benchmark_tenants = sorted(
         {
             str(row.get("tenant_id") or "").strip()
             for row in rows
@@ -372,7 +372,7 @@ def validate_dataset(
     corpus_cache: dict[str, tuple[dict[str, list[CorpusFile]], str]] = {}
     failures: list[str] = []
     warnings: list[str] = []
-    for tenant_id in q2_tenants:
+    for tenant_id in benchmark_tenants:
         files, collisions, unsupported = _collect_visible_files(tenant_id)
         for basename, paths in sorted(collisions.items()):
             _fail(
@@ -479,14 +479,14 @@ def main() -> int:
         )
 
     if failures:
-        print("FAIL: Q2 content semantic validation failed.")
+        print("FAIL: Benchmark content semantic validation failed.")
         for item in failures:
             print(f"FAIL: {item}")
         for item in warnings:
             print(f"WARN: {item}")
         return 1
 
-    print("PASS: Q2 content semantic validation completed.")
+    print("PASS: Benchmark content semantic validation completed.")
     print(
         f"INFO: rows={summary['rows']} routes={summary['routes']} "
         f"tenants={summary['tenants']} warnings={summary['warning_count']}"

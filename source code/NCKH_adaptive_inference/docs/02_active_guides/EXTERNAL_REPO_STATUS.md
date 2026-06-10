@@ -4,15 +4,15 @@ This note is for external readers opening the repository for the first time.
 
 ## One-Line Summary
 
-The repo already contains a runnable enterprise LLM orchestration prototype and a validated Q2 multi-domain benchmark-construction pipeline, while the final paper-facing benchmark runs on `vLLM` remain an active execution step.
+The repo already contains a runnable enterprise LLM orchestration prototype and a validated multi-domain benchmark-construction pipeline, while the final paper-facing benchmark runs on `vLLM` remain an active execution step.
 
 ## What Is Already Solid
 
 - runtime code for multi-tenant path orchestration
 - route telemetry and benchmark execution scripts
-- Q2 source-pack generation from real tenant corpora
-- balanced Q2 dataset construction for main/model/stability/isolation packs
-- strict semantic validation of the Q2 packs
+- source query-pack construction from real tenant corpora
+- balanced dataset construction for main/model/stability/isolation packs
+- strict semantic validation of the benchmark packs
 - controlled replay preparation for joint `path + model-tier` evaluation
 
 ## What Is Not Yet Claimed As Finished
@@ -44,10 +44,10 @@ Legacy artifacts for earlier `final24`, `final48`, `paper_real`, and `phase7` fl
 Use:
 
 1. `make bootstrap`
-2. `make build-q2-corpus`
-3. `make prepare-q2-pack`
-4. `make validate-q2-pack`
-5. `make validate-q2-content`
-6. `make check-q2-readiness`
+2. `make build-benchmark-corpus`
+3. `make prepare-benchmark-pack`
+4. `make validate-benchmark-pack`
+5. `make validate-benchmark-content`
+6. `make check-benchmark-readiness`
 
-Then move to the `benchmark-q2-*` targets only after the target backend is verified.
+Then move to the benchmark execution targets only after the target backend is verified.

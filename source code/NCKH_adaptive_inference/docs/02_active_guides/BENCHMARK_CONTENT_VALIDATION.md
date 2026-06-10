@@ -1,6 +1,6 @@
-# Q2 Content Validation
+# Benchmark Content Validation
 
-Structural validation alone is not enough for the paper-facing Q2 benchmark.
+Structural validation alone is not enough for the paper-facing benchmark.
 
 Semantic validation is needed to answer three questions:
 
@@ -8,17 +8,14 @@ Semantic validation is needed to answer three questions:
 - do the expected keywords actually appear in the intended ground-truth file?
 - does the current tenant corpus accidentally contain forbidden or leakage markers?
 
-Script:
+Core validator:
 
-- `systems_evaluation/validate_q2_content_semantics.py`
+- the benchmark semantic validation utility
 
 Commands:
 
 ```bash
-make validate-q2-content-pack
-make validate-q2-content-model
-make validate-q2-content-stability
-make validate-q2-content-isolation
+make validate-benchmark-content
 ```
 
 ## What The Script Checks

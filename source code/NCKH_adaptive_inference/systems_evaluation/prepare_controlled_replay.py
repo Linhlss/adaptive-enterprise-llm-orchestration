@@ -30,7 +30,7 @@ def main() -> int:
     parser.add_argument("--dataset", required=True)
     parser.add_argument("--trace", required=True, help="Route-only prediction JSON from the adaptive policy pass.")
     parser.add_argument("--output-dir", default="systems_evaluation")
-    parser.add_argument("--prefix", default="test_queries_q2_joint_replay")
+    parser.add_argument("--prefix", default="test_queries_benchmark_joint_replay")
     parser.add_argument("--manifest", default="")
     args = parser.parse_args()
 

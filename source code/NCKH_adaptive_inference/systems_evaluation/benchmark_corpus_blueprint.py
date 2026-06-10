@@ -7,7 +7,7 @@ def _rows(*items: dict[str, Any]) -> list[dict[str, Any]]:
     return [dict(item) for item in items]
 
 
-Q2_CORPUS_BLUEPRINT: dict[str, dict[str, Any]] = {
+BENCHMARK_CORPUS_BLUEPRINT: dict[str, dict[str, Any]] = {
     "academic_registrar": {
         "domain_id": "academic_admin",
         "domain_name": "Academic and administrative support",

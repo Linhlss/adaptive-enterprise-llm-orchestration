@@ -6,18 +6,18 @@ This document defines the benchmark framework for the project’s current direct
 - multi-tenant
 - adaptive path selection plus controlled model-tier evaluation
 - systems-and-application positioning
-- Q2-oriented evidence quality
+- publication-ready evidence quality
 
 Its purpose is to:
 
 - define a benchmark that is strong enough to support practical claims
-- separate a **minimum defensible** benchmark from a **Q2-strong** benchmark
+- separate a **minimum defensible** benchmark from a **strong-evidence** benchmark
 - avoid overclaiming from an undersized benchmark
 - avoid inflating the benchmark without adding proportionate evidential value
 
 ## 1. General Principle
 
-There is no single benchmark size that automatically makes the project “Q2.”
+There is no single benchmark size that automatically makes the project publishable.
 
 For the current direction, the evidence should establish four things:
 
@@ -41,15 +41,15 @@ Because of that, the evidence priority should be:
 
 This is the minimum evidence level required to write the paper in the new direction without the evidence collapsing immediately under scrutiny.
 
-### Q2-Strong Target
+### Strong-Evidence Target
 
-This is the target level if the goal is a stronger systems/applied Q2 submission.
+This is the target level if the goal is a stronger systems/applied submission.
 
 If only the minimum level is achieved, the paper can still be written, but its claims must remain very disciplined.
 
 ## 3. Core Benchmark Matrix
 
-| Component | Minimum Defensible | Q2-Strong Target | Notes |
+| Component | Minimum Defensible | Strong-Evidence Target | Notes |
 | --- | --- | --- | --- |
 | Number of domains | 3 | 3 | Going below 3 weakens the multi-domain claim |
 | Content-bearing tenants per domain | 2 | 2 | Six tenants with real content |
@@ -103,7 +103,7 @@ Purpose:
 Size:
 
 - minimum defensible: `36 cases / domain`
-- Q2-strong target: `48 cases / domain`
+- strong-evidence target: `48 cases / domain`
 
 Total cases:
 
@@ -246,7 +246,7 @@ Not:
 4. `Fixed general`
 5. `Adaptive path-only`
 
-### Q2-strong target rows
+### Strong-evidence target rows
 
 1. `Fixed Qwen3-14B-AWQ`
 2. `Fixed Qwen3-8B-AWQ`

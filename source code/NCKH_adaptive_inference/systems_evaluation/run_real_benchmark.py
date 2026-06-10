@@ -328,7 +328,7 @@ def run_predictions(
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", default="systems_evaluation/test_queries_q2_multidomain.json")
+    parser.add_argument("--dataset", default="systems_evaluation/test_queries_multidomain.json")
     parser.add_argument("--label", default="baseline_real")
     parser.add_argument("--output-dir", default="systems_evaluation/generated_reports")
     parser.add_argument("--fixed-route-mode", choices=["adaptive", "tool", "retrieval", "general", "out_of_scope"], default=None)

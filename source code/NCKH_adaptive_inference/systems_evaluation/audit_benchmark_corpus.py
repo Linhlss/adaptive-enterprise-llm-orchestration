@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
-from systems_evaluation.q2_corpus_blueprint import Q2_CORPUS_BLUEPRINT
+from systems_evaluation.benchmark_corpus_blueprint import BENCHMARK_CORPUS_BLUEPRINT
 
 TENANTS_DIR = BASE_DIR / "data" / "tenants"
 PROSE_EXTENSIONS = {".pdf", ".docx", ".doc", ".txt", ".md"}
@@ -36,13 +36,13 @@ def _tenant_counts(tenant_id: str) -> tuple[int, int, int]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Audit local Q2 corpus counts per tenant.")
+    parser = argparse.ArgumentParser(description="Audit local Benchmark corpus counts per tenant.")
     parser.add_argument("--expected-prose", type=int, default=10)
     parser.add_argument("--expected-structured", type=int, default=3)
     args = parser.parse_args()
 
     failures = 0
-    for tenant_id in sorted(Q2_CORPUS_BLUEPRINT):
+    for tenant_id in sorted(BENCHMARK_CORPUS_BLUEPRINT):
         prose, structured, other = _tenant_counts(tenant_id)
         ok = prose >= args.expected_prose and structured >= args.expected_structured
         status = "PASS" if ok else "FAIL"

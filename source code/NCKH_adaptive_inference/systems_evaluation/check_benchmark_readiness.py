@@ -42,8 +42,8 @@ def _load_rows(path: Path) -> list[dict[str, Any]]:
     return [dict(row) for row in raw]
 
 
-def _q2_tenants(configs: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    return {tenant_id: cfg for tenant_id, cfg in configs.items() if bool(cfg.get("q2_domain_pack"))}
+def _benchmark_tenants(configs: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    return {tenant_id: cfg for tenant_id, cfg in configs.items() if bool(cfg.get("benchmark_domain_pack"))}
 
 
 def _tenant_content_counts(tenant_id: str) -> tuple[int, int, int]:
@@ -65,12 +65,12 @@ def _tenant_content_counts(tenant_id: str) -> tuple[int, int, int]:
     return prose, structured, other
 
 
-def _source_case_counts(inputs: list[Path], q2_tenant_ids: set[str]) -> Counter[tuple[str, str]]:
+def _source_case_counts(inputs: list[Path], benchmark_tenant_ids: set[str]) -> Counter[tuple[str, str]]:
     counts: Counter[tuple[str, str]] = Counter()
     for path in inputs:
         for row in _load_rows(path):
             tenant_id = str(row.get("tenant_id") or "").strip()
-            if tenant_id not in q2_tenant_ids:
+            if tenant_id not in benchmark_tenant_ids:
                 continue
             domain_id = str(row.get("domain_id") or "").strip()
             route = str(row.get("expected_route") or "").strip()
@@ -95,19 +95,19 @@ def _print_status(ok: bool, message: str) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check readiness before running the Q2 benchmark pack.")
+    parser = argparse.ArgumentParser(description="Check readiness before running the benchmark pack.")
     parser.add_argument(
         "--input",
         nargs="+",
         default=[
-            "systems_evaluation/test_queries_q2_source.json",
+            "systems_evaluation/test_queries_source.json",
         ],
-        help="Source query files used by prepare_q2_benchmark_dataset.py.",
+        help="Source query files used by prepare_benchmark_dataset.py.",
     )
-    parser.add_argument("--dataset", default="systems_evaluation/test_queries_q2_multidomain.json")
-    parser.add_argument("--model-dataset", default="systems_evaluation/test_queries_q2_model_sensitivity.json")
-    parser.add_argument("--stability-dataset", default="systems_evaluation/test_queries_q2_stability_subset.json")
-    parser.add_argument("--isolation-dataset", default="systems_evaluation/test_queries_q2_isolation.json")
+    parser.add_argument("--dataset", default="systems_evaluation/test_queries_multidomain.json")
+    parser.add_argument("--model-dataset", default="systems_evaluation/test_queries_model_sensitivity.json")
+    parser.add_argument("--stability-dataset", default="systems_evaluation/test_queries_stability_subset.json")
+    parser.add_argument("--isolation-dataset", default="systems_evaluation/test_queries_isolation.json")
     parser.add_argument("--cases-per-route-domain", type=int, default=12)
     parser.add_argument("--subset-cases-per-route-domain", type=int, default=6)
     parser.add_argument("--check-backend", action="store_true")
@@ -127,28 +127,28 @@ def main() -> int:
         return 1
 
     configs = {str(k): dict(v) for k, v in _load_json(TENANT_CONFIG).items()}
-    q2_configs = _q2_tenants(configs)
+    benchmark_configs = _benchmark_tenants(configs)
     domains: dict[str, set[str]] = defaultdict(set)
-    for tenant_id, cfg in q2_configs.items():
+    for tenant_id, cfg in benchmark_configs.items():
         domains[str(cfg.get("domain_id") or "")].add(tenant_id)
 
     if len(domains) != 3:
-        failures.append(f"expected 3 Q2 domains, found {len(domains)}: {sorted(domains)}")
+        failures.append(f"expected 3 benchmark domains, found {len(domains)}: {sorted(domains)}")
     for domain_id, tenants in sorted(domains.items()):
         if len(tenants) != 2:
-            failures.append(f"domain {domain_id} expected 2 Q2 tenants, found {len(tenants)}: {sorted(tenants)}")
+            failures.append(f"domain {domain_id} expected 2 benchmark tenants, found {len(tenants)}: {sorted(tenants)}")
 
-    for tenant_id in sorted(q2_configs):
+    for tenant_id in sorted(benchmark_configs):
         prose, structured, other = _tenant_content_counts(tenant_id)
         if prose + structured + other == 0:
             failures.append(f"tenant {tenant_id} has no corpus files under data/tenants/{tenant_id}/files")
         if prose < 8:
-            warnings.append(f"tenant {tenant_id} has {prose} prose files; Q2 target is 8-15")
+            warnings.append(f"tenant {tenant_id} has {prose} prose files; Benchmark target is 8-15")
         if structured < 3:
-            warnings.append(f"tenant {tenant_id} has {structured} structured files; Q2 target is 3-4")
+            warnings.append(f"tenant {tenant_id} has {structured} structured files; Benchmark target is 3-4")
 
     source_inputs = [BASE_DIR / value if not Path(value).is_absolute() else Path(value) for value in args.input]
-    source_counts = _source_case_counts(source_inputs, set(q2_configs))
+    source_counts = _source_case_counts(source_inputs, set(benchmark_configs))
     for domain_id in sorted(domains):
         for route in REQUIRED_ROUTES:
             count = source_counts[(domain_id, route)]
@@ -211,7 +211,7 @@ def main() -> int:
                 f"missing_models={probe.missing_models or '[]'} error={probe.error or 'none'}"
             )
 
-    _print_status(not failures, "Q2 benchmark readiness check")
+    _print_status(not failures, "benchmark readiness check")
     for item in failures:
         print(f"FAIL: {item}")
     for item in warnings:
@@ -226,14 +226,14 @@ def main() -> int:
             print("2. Verify that `/v1/models` exposes the expected Qwen3-AWQ ladder.")
             print("3. Re-run this command with `--check-backend` after updating `VLLM_BASE_URL` or `--vllm-base-url`.")
         else:
-            print("1. Add corpus files under each data/tenants/<q2_tenant>/files/")
-            print("2. Add source query cases for each Q2 tenant/domain/route")
-            print("3. Run: make prepare-q2-pack")
-            print("4. Run: make validate-q2-pack validate-q2-model-sensitivity validate-q2-stability-subset validate-q2-isolation")
-            print("5. Run: make validate-q2-content-pack validate-q2-content-model validate-q2-content-stability validate-q2-content-isolation")
+            print("1. Add corpus files under each data/tenants/<benchmark_tenant>/files/")
+            print("2. Add source query cases for each benchmark tenant/domain/route")
+            print("3. Run: make prepare-benchmark-pack")
+            print("4. Run: make validate-benchmark-pack validate-model-sensitivity-pack validate-stability-pack validate-isolation-pack")
+            print("5. Run: make validate-benchmark-content-pack validate-benchmark-content-model validate-benchmark-content-stability validate-benchmark-content-isolation")
         return 1
 
-    print("Ready to run: make benchmark-q2-pack")
+    print("Ready to run: make benchmark-full-suite")
     return 0
 
 

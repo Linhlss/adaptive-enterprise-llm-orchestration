@@ -10,8 +10,8 @@ skinparam packageTitleAlignment center
 title Benchmark And Controlled Replay Pipeline
 
 package "Corpus And Pack Construction" {
-  rectangle "Q2 corpora\n3 domains\n2 content-bearing tenants per domain" as CORPUS
-  rectangle "Source-pack generation" as SOURCE
+  rectangle "Benchmark corpora\n3 domains\n2 content-bearing tenants per domain" as CORPUS
+  rectangle "Source query-pack construction" as SOURCE
   rectangle "Balanced benchmark construction\nmain | model | stability | isolation" as BUILD
   rectangle "Pack validation\nstructure + semantics + readiness" as VALIDATE
 
