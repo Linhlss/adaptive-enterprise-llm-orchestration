@@ -176,6 +176,5 @@ The repository currently assumes:
 
 ## Public-Facing Claim Discipline
 
-If you are reading this repository externally, the safe summary is:
 
 > This project implements a tenant-aware enterprise LLM runtime and a validated multi-domain benchmark-construction pipeline for studying adaptive orchestration. The codebase already supports route-level evaluation and controlled replay for joint path-and-model policy analysis, while the final paper-facing benchmark runs remain an active execution task.
